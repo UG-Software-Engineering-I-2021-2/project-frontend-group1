@@ -1,8 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { Login } from "./components/Login/Login";
-import { LogOut } from "./components/LogOut/LogOut";
-import { Profile } from "./components/Profile/Profile";
+import { Login } from "./components/pages/Login/Login";
+import { LogOut } from "./components/pages/LogOut/LogOut";
+import { Profile } from "./components/pages/Profile/Profile";
 
 
 const App = () => {
