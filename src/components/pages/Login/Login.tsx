@@ -8,6 +8,6 @@ export const Login = () => {
   useEffect(() => {
     loginWithRedirect()
   }, [])
-  
-  return <button onClick={() => loginWithRedirect()}>Login</button>;
+
+  return <></>;
 };
