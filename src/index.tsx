@@ -3,17 +3,21 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import { Auth0Provider } from "@auth0/auth0-react";
+import { ChakraProvider } from "@chakra-ui/react"
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-     <Auth0Provider
+    <Auth0Provider
       domain="dev-1m3nzcnf.us.auth0.com"
       clientId="6Ksgajs4QkIBhcgqP7IYEqcybmkc3lQM"
       redirectUri={window.location.origin}
     >
-      <App />
+      <ChakraProvider>
+
+        <App />
+      </ChakraProvider>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')

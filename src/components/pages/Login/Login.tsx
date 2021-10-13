@@ -6,8 +6,13 @@ export const Login = () => {
   const { loginWithRedirect } = useAuth0();
 
   useEffect(() => {
-    loginWithRedirect()
-  }, [])
+    loginWithRedirect({redirectUri: window.location.origin + "/main"}).then((val) => {
+      console.log(val)
+    }).catch((err)=>{
+      console.log(err)
+    })
 
+
+  }, [])
   return <></>;
 };

@@ -15,7 +15,7 @@ export const Profile = () => {
       console.log(err)
     })
     
-  }, [user])
+  }, [])
 
 
   if (isLoading) {
