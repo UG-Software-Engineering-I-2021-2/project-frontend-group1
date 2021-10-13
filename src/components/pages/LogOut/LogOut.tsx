@@ -1,5 +1,12 @@
-import React from "react"
+import { Button } from "@chakra-ui/button";
+import React from "react";
 
 export const LogOut = () => {
-    return <></>
-}
+  return (
+    <>
+      <Button background="black" textColor="white">
+        Logout
+      </Button>
+    </>
+  );
+};
