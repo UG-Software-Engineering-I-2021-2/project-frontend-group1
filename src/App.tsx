@@ -9,10 +9,11 @@ import {
   Route,
   Switch,
   Redirect,
-  useHistory,
 } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
+import IdleTimer from 'react-idle-timer'
+
 
 const theme = extendTheme({
   colors: {
@@ -25,8 +26,17 @@ const theme = extendTheme({
 });
 
 const App = () => {
+
   return (
     <ChakraProvider theme={theme}>
+      <IdleTimer
+        timeout={600000} // logout the user after 10minutes if you want to change the value of idle time you will have to change timeout variable 
+        onIdle={() => {
+          localStorage.clear()
+          window.location.href = window.location.origin + "/"
+        }}
+        debounce={250}
+      />
       <BrowserRouter>
         <Switch>
           <Route exact path="/main" render={(props) => <MainPage></MainPage>} />
