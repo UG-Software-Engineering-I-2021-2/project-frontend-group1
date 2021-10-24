@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { Input, Button } from "@chakra-ui/react";
-import { CourseButton } from "../../utils/CourseButton/CourseButton";
-
-var cursos = [
-  "Ingeniería de Software",
-  "Base de Datos",
-  "Proyecto Interdisciplinario",
-];
-var cursos2 = [
-  "Desarrollo de Software",
-  "Programación competitiva",
-  "Programación 1",
-];
-var colors = ["green", "blue", "brown", "grey", "orange", "red", "pink"];
 
 export const Courses = () => {
+  const [courses, setCourses] = useState([
+    { nombre: "Programación", display: true },
+    { nombre: "Matemáticas", display: true },
+    { nombre: "Química", display: true },
+    { nombre: "Ingeniería de Software", display: true },
+  ]);
+  const [courseFilter, setCourseFilter] = useState("");
+
+  const courseInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value;
+    setCourseFilter(name);
+
+    courses.map((course) => {
+      course.display = course.nombre.toLowerCase().includes(name.toLowerCase())
+        ? true
+        : false;
+    });
+  };
+
   return (
     <>
       <div
@@ -34,43 +40,34 @@ export const Courses = () => {
           borderRadius="20"
           fontSize="20"
           padding="5"
+          value={courseFilter}
+          onChange={courseInputHandler}
         />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          //border: "1px solid",
-          width: "100%",
-          height: "100%",
-          justifyContent: "space-around",
-          padding: "40px",
-        }}
-      >
-        {cursos.map((item) => (
-          <CourseButton
-            course={item}
-            color={colors[Math.floor(Math.random() * colors.length)]}
-          />
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          //border: "1px solid",
-          width: "100%",
-          height: "100%",
-          justifyContent: "space-around",
-          padding: "40px",
-        }}
-      >
-        {cursos2.map((item) => (
-          <CourseButton
-            course={item}
-            color={colors[Math.floor(Math.random() * colors.length)]}
-          />
-        ))}
-      </div>
+      {courses.map((course) => (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            //border: "1px solid",
+            justifyContent: "center",
+          }}
+        >
+          {course.display ? (
+            <Button
+              borderRadius="20"
+              padding="10"
+              border="3px solid"
+              borderColor="black"
+              width="30%"
+              marginBottom="5"
+            >
+              {course.nombre}
+            </Button>
+          ) : null}
+        </div>
+      ))}
     </>
   );
 };
