@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
-import { Courses } from "../Courses/Courses";
+import { CoursesPage } from "../Courses/Courses";
 import { LogOut } from "../LogOut/LogOut";
 
 export const MainPage = () => {
@@ -34,7 +34,7 @@ export const MainPage = () => {
 
         <TabPanels>
           <TabPanel p={4}>
-            <Courses />
+            <CoursesPage />
           </TabPanel>
           <TabPanel>
             <p>Estadisticas generales</p>
