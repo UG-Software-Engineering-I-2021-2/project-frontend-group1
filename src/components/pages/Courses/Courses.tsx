@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Input, Button } from "@chakra-ui/react";
 
-export const Courses = () => {
+interface course {
+  name: String;
+  display: Boolean;
+}
 
-  //!important change this to interface 
-  const [courses, setCourses] = useState([
-    { nombre: "Programación", display: true },
-    { nombre: "Matemáticas", display: true },
-    { nombre: "Química", display: true },
-    { nombre: "Ingeniería de Software", display: true },
+export const CoursesPage = () => {
+  const [courses, setCourses] = useState<Array<course>>([
+    { name: "Matemática", display: true },
+    { name: "Programación", display: true },
+    { name: "Química", display: true },
+    { name: "Física", display: true },
+    { name: "Letras", display: true },
   ]);
   const [courseFilter, setCourseFilter] = useState("");
 
@@ -17,7 +21,7 @@ export const Courses = () => {
     setCourseFilter(name);
 
     courses.map((course) => {
-      course.display = course.nombre.toLowerCase().includes(name.toLowerCase())
+      course.display = course.name.toLowerCase().includes(name.toLowerCase())
         ? true
         : false;
     });
@@ -47,7 +51,7 @@ export const Courses = () => {
         />
       </div>
 
-      {courses.map((course) => (
+      {courses.map((item: course) => (
         <div
           style={{
             display: "flex",
@@ -56,7 +60,7 @@ export const Courses = () => {
             justifyContent: "center",
           }}
         >
-          {course.display ? (
+          {item.display ? (
             <Button
               borderRadius="20"
               padding="10"
@@ -65,7 +69,7 @@ export const Courses = () => {
               width="30%"
               marginBottom="5"
             >
-              {course.nombre}
+              {item.name}
             </Button>
           ) : null}
         </div>
