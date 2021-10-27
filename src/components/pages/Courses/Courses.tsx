@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Input, Button } from "@chakra-ui/react";
+import { useHistory } from "react-router";
 
 interface course {
-  name: String;
-  display: Boolean;
+  name: string;
+  display: boolean;
 }
 
 export const CoursesPage = () => {
+  const history = useHistory()
   const [courses, setCourses] = useState<Array<course>>([
     { name: "Matemática", display: true },
     { name: "Programación", display: true },
@@ -26,6 +28,10 @@ export const CoursesPage = () => {
         : false;
     });
   };
+
+  const setCourse = (courseName: string) => {
+    history.push(`/rubric?course=${courseName}`)
+  }
 
   return (
     <>
@@ -65,6 +71,7 @@ export const CoursesPage = () => {
               borderRadius="20"
               padding="10"
               border="3px solid"
+              onClick={()=>setCourse(item.name)}
               borderColor="black"
               width="30%"
               marginBottom="5"
