@@ -6,6 +6,6 @@ const axiosEnv = axios.create({
 })
 
 
-export const LoginApp = (email: string) => {
-    return axiosEnv.post("login", email)
+export const LoginApp = (email: string | undefined, token: string) => {
+    return axiosEnv.post("login", email, { headers: { Authorization: token } })
 }

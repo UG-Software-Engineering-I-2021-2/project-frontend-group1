@@ -9,11 +9,6 @@ export const Profile = () => {
     
     if(!user?.email || `${user.email}`.length === 0) return
 
-    LoginApp(user.email).then((val) => {
-      console.log(val)
-    }).catch((err) => {
-      console.log(err)
-    })
     
   }, [])
 

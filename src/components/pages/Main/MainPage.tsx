@@ -6,9 +6,10 @@ import { LogOut } from "../LogOut/LogOut";
 import { useAuth0 } from "@auth0/auth0-react"
 import { useHistory } from "react-router";
 import { Header } from "../../templates/header/header";
+import { LoginApp } from "../../../api/ApiEndpoints";
 
 export const MainPage = () => {
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, getIdTokenClaims  } = useAuth0();
   const history = useHistory()
 
   useEffect(() => {
@@ -20,6 +21,17 @@ export const MainPage = () => {
         localStorage.setItem("user", JSON.stringify(user))
       }
     }
+
+    getIdTokenClaims().then((val) => {
+      console.log(val.__raw)
+
+        
+      LoginApp(val.email, val.__raw).then((newval) => {
+        console.log("Response ", newval)
+      }).catch((err) => {
+        console.log(err)
+      })
+    })
   }, [user])
 
   return (
