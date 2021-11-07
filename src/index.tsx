@@ -11,15 +11,11 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider
-      domain="dev-1m3nzcnf.us.auth0.com"
-      clientId="6Ksgajs4QkIBhcgqP7IYEqcybmkc3lQM"
-      redirectUri={window.location.origin}
-    >
+
       <ChakraProvider>
         <App />
       </ChakraProvider>
-    </Auth0Provider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
