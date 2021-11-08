@@ -21,7 +21,6 @@ axiosEnv.interceptors.request.use((request) => {
 })
 
 export const LoginApp = (token: string): Promise<LoginResponse> => {
-    console.log(token)
     return axios.post(`${BASE_URL}login`, null, {
         headers: {
             Authorization: token,

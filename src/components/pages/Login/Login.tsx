@@ -20,11 +20,9 @@ export const Login = () => {
       }
     }
 
-    console.log(user)
     if (user.tokenId) {
       const token = user.tokenId;
 
-      console.log(user)
       LoginApp(token).then((loggedUser: LoginResponse) => {
         localStorage.setItem("role", loggedUser.data.role)
         localStorage.setItem("email", user.profileObj.email)
@@ -72,7 +70,7 @@ export const Login = () => {
             >
               <Box>
                 <Text>
-                  Solo usuariaros permetidos podrán ingresar a la plataforma
+                  Solo usuariaros permitidos podrán ingresar a la plataforma
                 </Text>
               </Box>
 
