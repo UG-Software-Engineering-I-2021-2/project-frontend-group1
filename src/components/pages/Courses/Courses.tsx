@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Button, SimpleGrid, Box } from "@chakra-ui/react";
+import { Input, Button, SimpleGrid, Box, Badge } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { GetCourses } from "../../../api/ApiEndpoints";
 import { CoursesResponse } from "../../../interfaces/courses";
@@ -10,65 +10,45 @@ interface Courses {
   cod_course: string
 }
 
-interface CourseCard extends Courses {
-  image: string,
-  issue_date: string,
+
+const getColor = (): string => { 
+  return "hsl(" + 360 * Math.random() + ',' +
+             (25 + 70 * Math.random()) + '%,' + 
+             (85 + 10 * Math.random()) + '%)'
 }
 
-// const CourseCard = (props: ) => {
-//   return (  <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-//   <Image src={property.imageUrl} alt={property.imageAlt} />
 
-//   <Box p="6">
-//     <Box display="flex" alignItems="baseline">
-//       <Badge borderRadius="full" px="2" colorScheme="teal">
-//         New
-//       </Badge>
-//       <Box
-//         color="gray.500"
-//         fontWeight="semibold"
-//         letterSpacing="wide"
-//         fontSize="xs"
-//         textTransform="uppercase"
-//         ml="2"
-//       >
-//         {property.beds} beds &bull; {property.baths} baths
-//       </Box>
-//     </Box>
+const CourseCard = (props: Courses) => {
+  const history = useHistory()
 
-//     <Box
-//       mt="1"
-//       fontWeight="semibold"
-//       as="h4"
-//       lineHeight="tight"
-//       isTruncated
-//     >
-//       {property.title}
-//     </Box>
+  const setToRubric = (data: Courses) => {
+    history.push(`/rubric?name=${data.name}&cod=${data.cod_course}`)
+  }
 
-//     <Box>
-//       {property.formattedPrice}
-//       <Box as="span" color="gray.600" fontSize="sm">
-//         / wk
-//       </Box>
-//     </Box>
+  return (
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" backgroundColor={getColor()} onClick={() => setToRubric(props)}>
+      <Box p="6">
+        <Box display="flex" alignItems="baseline">
+          <Badge borderRadius="full" px="2" colorScheme="teal">
+            Curso
+          </Badge>
+        </Box>
 
-//     <Box display="flex" mt="2" alignItems="center">
-//       {Array(5)
-//         .fill("")
-//         .map((_, i) => (
-//           <StarIcon
-//             key={i}
-//             color={i < property.rating ? "teal.500" : "gray.300"}
-//           />
-//         ))}
-//       <Box as="span" ml="2" color="gray.600" fontSize="sm">
-//         {property.reviewCount} reviews
-//       </Box>
-//     </Box>
-//   </Box>
-// </Box>)
-// }
+        <Box
+          mt="1"
+          fontWeight="semibold"
+          as="h4"
+          lineHeight="tight"
+          isTruncated
+        >
+          {props.name}
+        </Box>
+        <Box>
+          {props.cod_course}
+        </Box>
+      </Box>
+    </Box>)
+}
 
 export const CoursesPage = () => {
   const history = useHistory()
@@ -78,7 +58,6 @@ export const CoursesPage = () => {
     GetCourses().then((val: CoursesResponse) => {
       const courses = new Map(Object.entries(val.data));
       const userCourses = new Array<Courses>();
-console.log(courses)
       //@ts-ignore
       Array.from(courses.entries()).map(([x, y]) => {
         userCourses.push({
@@ -88,7 +67,7 @@ console.log(courses)
       })
 
       setUserCourses(userCourses)
-
+      localStorage.setItem("courses", JSON.stringify(userCourses))
     }).catch((err) => {
       console.log(err)
     })
@@ -99,10 +78,9 @@ console.log(courses)
       <SimpleGrid columns={4} spacing={30} mt={100} ml={5}>
         {
           userCourse.map((val: Courses) => {
-            return <Box>{val.name} {val.cod_course}</Box>
+            return <CourseCard  name={val.name} cod_course={val.cod_course}></CourseCard>
           })
         }
-
       </SimpleGrid>
     </>
   );
