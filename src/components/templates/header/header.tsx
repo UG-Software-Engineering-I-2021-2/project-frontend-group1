@@ -10,7 +10,7 @@ export const Header = () => {
   return (
     <Grid templateColumns="repeat(10, 1fr)" gap={6} h="200">
 
-      <GridItem colSpan={1}>
+      <GridItem colSpan={2}>
         <Box w="100%" h="200" >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Utec-logo.jpg"
@@ -20,7 +20,7 @@ export const Header = () => {
         </Box>
       </GridItem>
 
-      <GridItem colStart={2} colEnd={6} >
+      <GridItem colStart={3} colEnd={6} >
         <Box w="100%" h="200"  style={{ display: "flex", alignItems: "center" }}>
           <Text fontSize="lg">
             <b> Bienvenido {role} </b>   

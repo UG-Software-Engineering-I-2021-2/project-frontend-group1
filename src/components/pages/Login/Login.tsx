@@ -24,8 +24,8 @@ export const Login = () => {
     if (user.tokenId) {
       const token = user.tokenId;
 
+      console.log(user)
       LoginApp(token).then((loggedUser: LoginResponse) => {
-        console.log(loggedUser)
         localStorage.setItem("role", loggedUser.data.role)
         localStorage.setItem("email", user.profileObj.email)
         localStorage.setItem("name", loggedUser.data.name)
@@ -60,7 +60,7 @@ export const Login = () => {
               <img src="https://www.utec.edu.pe/sites/all/themes/utec_theme/LOGO_UTEC.png"></img>
             </Box>
           </Center>
-          <Heading color="teal.400" mb={20}>Proyecto de Ingenieria de Software</Heading>
+          <Heading color="teal.400" mb={20}>Proyecto de Ingeniería de Software</Heading>
 
 
           <Box minW={{ base: "90%", md: "468px" }} style={{ marginTop: "100px" }}>
@@ -78,13 +78,7 @@ export const Login = () => {
 
               <GoogleLogin
                 clientId="854441781361-k1cg7207b002frst5mirrhfko7tbj602.apps.googleusercontent.com"
-                // render={(renderProps) => (
-                //   <CustomGoogleButton
-                //     onClick={renderProps.onClick}
-                //     disabled={renderProps.disabled}
-                //   />
-                // )}
-                buttonText="Continue with Google"
+                buttonText="Log in with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={"single_host_origin"}
