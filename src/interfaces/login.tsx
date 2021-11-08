@@ -1,5 +1,7 @@
 export interface LoginResponse {
-    email: string,
-    roll: string,
-    name: string
+    data : {
+        email: string,
+        role: string,
+        name: string
+    }
 }

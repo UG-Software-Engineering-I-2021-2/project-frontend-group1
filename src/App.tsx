@@ -32,7 +32,7 @@ const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <IdleTimer
-        timeout={14000} //600000 logout the user after 10minutes if you want to change the value of idle time you will have to change timeout variable 
+        timeout={600000} //600000 logout the user after 10minutes if you want to change the value of idle time you will have to change timeout variable 
         onIdle={() => {
           localStorage.clear()
           window.location.href = window.location.origin + "/"
