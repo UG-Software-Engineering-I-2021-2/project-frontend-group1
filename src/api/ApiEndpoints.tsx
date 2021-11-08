@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CoursesResponse } from "../interfaces/courses";
 import { LoginResponse } from "../interfaces/login";
 
 const BASE_URL = "https://api.cs.mrg.com.pe/api-u-group01/"
@@ -30,6 +31,6 @@ export const LoginApp = (token: string): Promise<LoginResponse> => {
     })
 }
 
-export const GetCourses = () => {
+export const GetCourses = (): Promise<CoursesResponse> => {
     return axiosEnv.post("/courses_username", { "semestre": "2021-2" })
 }
