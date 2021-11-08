@@ -29,6 +29,7 @@ export const Login = () => {
         localStorage.setItem("role", loggedUser.data.role)
         localStorage.setItem("email", user.profileObj.email)
         localStorage.setItem("name", loggedUser.data.name)
+        localStorage.setItem("token", token)
         history.push("/main")
       }).catch((err) => {
         history.push("/not-found")

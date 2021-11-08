@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button } from "@chakra-ui/react";
 import { useHistory } from "react-router";
+import { GetCourses } from "../../../api/ApiEndpoints";
 
 interface course {
   name: string;
@@ -9,6 +10,15 @@ interface course {
 
 export const CoursesPage = () => {
   const history = useHistory()
+
+  useEffect(()=>{
+    GetCourses().then((val) => {
+      console.log(val)
+    }).catch((err) => {
+      console.log(err)
+    })
+  })
+
   const [courses, setCourses] = useState<Array<course>>([
     { name: "Matemática", display: true },
     { name: "Programación", display: true },
