@@ -1,3 +1,9 @@
 export interface CoursesResponse {
-    data: JSON
+    data: Array<Courses>
+}
+
+
+export interface Courses {
+    name: string,
+    code: string
 }

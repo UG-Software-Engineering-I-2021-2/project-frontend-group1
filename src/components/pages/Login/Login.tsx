@@ -10,7 +10,7 @@ export const Login = () => {
 
 
   const responseGoogle = (user: any) => {
-
+    localStorage.clear()
     if (user) {
       const indexOf = user.profileObj.email.indexOf("@");
       if (indexOf && user.profileObj.email.substr(indexOf) !== "@utec.edu.pe") {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { CoursesResponse } from "../interfaces/courses";
 import { LoginResponse } from "../interfaces/login";
+import { RubricResponse } from "../interfaces/rubric";
 
 const BASE_URL = "https://api.cs.mrg.com.pe/api-u-group01/"
 
@@ -31,5 +32,10 @@ export const LoginApp = (token: string): Promise<LoginResponse> => {
 }
 
 export const GetCourses = (): Promise<CoursesResponse> => {
-    return axiosEnv.post("/courses_username", { "semestre": "2021-2" })
+    return axiosEnv.post("/courses_username", { "semestre": "2021 - 2" })
+}
+
+
+export const GetRubrics = (code: string): Promise<RubricResponse> => {
+    return axiosEnv.post("/rubrics_course", { "semestre": "2021 - 2", "course_code": code })
 }

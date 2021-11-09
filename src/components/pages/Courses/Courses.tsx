@@ -2,19 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Input, Button, SimpleGrid, Box, Badge } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { GetCourses } from "../../../api/ApiEndpoints";
-import { CoursesResponse } from "../../../interfaces/courses";
+import { CoursesResponse, Courses } from "../../../interfaces/courses";
 
 
-interface Courses {
-  name: string,
-  cod_course: string
-}
-
-
-const getColor = (): string => { 
+const getColor = (): string => {
   return "hsl(" + 360 * Math.random() + ',' +
-             (25 + 70 * Math.random()) + '%,' + 
-             (85 + 10 * Math.random()) + '%)'
+    (25 + 70 * Math.random()) + '%,' +
+    (85 + 10 * Math.random()) + '%)'
 }
 
 
@@ -22,7 +16,7 @@ const CourseCard = (props: Courses) => {
   const history = useHistory()
 
   const setToRubric = (data: Courses) => {
-    history.push(`/rubric?name=${data.name}&cod=${data.cod_course}`)
+    history.push(`/rubric?name=${data.name}&cod=${data.code}`)
   }
 
   return (
@@ -44,30 +38,32 @@ const CourseCard = (props: Courses) => {
           {props.name}
         </Box>
         <Box>
-          {props.cod_course}
+          {props.code}
         </Box>
       </Box>
     </Box>)
 }
 
 export const CoursesPage = () => {
-  const history = useHistory()
-  const [userCourse, setUserCourses] = useState<Array<Courses>>([])
+  const [userCourse, setUserCourses] = useState<Array<Courses>>([{
+    code: "",
+    name: ""
+  }])
 
   useEffect(() => {
-    GetCourses().then((val: CoursesResponse) => {
-      const courses = new Map(Object.entries(val.data));
-      const userCourses = new Array<Courses>();
-      //@ts-ignore
-      Array.from(courses.entries()).map(([x, y]) => {
-        userCourses.push({
-          name: y,
-          cod_course: x
-        })
-      })
 
+    const rawCourse = localStorage.getItem("courses")
+    if (rawCourse && rawCourse?.length !== 0) {
+      const parsedCourse = JSON.parse(rawCourse)
+      setUserCourses(parsedCourse)
+      return
+    }
+
+    GetCourses().then((val: CoursesResponse) => {
+      const userCourses = val.data
       setUserCourses(userCourses)
       localStorage.setItem("courses", JSON.stringify(userCourses))
+
     }).catch((err) => {
       console.log(err)
     })
@@ -77,8 +73,8 @@ export const CoursesPage = () => {
     <>
       <SimpleGrid columns={4} spacing={30} mt={100} ml={5}>
         {
-          userCourse.map((val: Courses) => {
-            return <CourseCard  name={val.name} cod_course={val.cod_course}></CourseCard>
+          userCourse?.map((val: Courses, i: number) => {
+            return <CourseCard key={i} name={val.name} code={val.code}></CourseCard>
           })
         }
       </SimpleGrid>
