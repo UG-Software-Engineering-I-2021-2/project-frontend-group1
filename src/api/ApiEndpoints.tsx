@@ -37,5 +37,5 @@ export const GetCourses = (): Promise<CoursesResponse> => {
 
 
 export const GetRubrics = (code: string): Promise<RubricResponse> => {
-    return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "course_code": code })
+    return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "courseCode": code })
 }

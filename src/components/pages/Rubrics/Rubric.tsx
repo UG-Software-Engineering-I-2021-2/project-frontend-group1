@@ -1,67 +1,143 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
-import queryString from 'query-string'
+import queryString from "query-string";
 import { Header } from "../../templates/header/header";
-import { Box, Heading, Button, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Button,
+  SimpleGrid,
+  chakra,
+  Image,
+  Flex,
+  useColorModeValue,
+  Link,
+} from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { GetRubrics } from "../../../api/ApiEndpoints";
-import { Rubric, RubricResponse } from "../../../interfaces/rubric";
+import {
+  Rubric,
+  RubricResponse,
+  GetColorByRubricState,
+} from "../../../interfaces/rubric";
 
+const RubricCard = (props: { data: Rubric }) => {
+  return (
+    <Flex  p={50} _hover={ { cursor: `${props.data.canEdit ? "pointer" : "not-allowed"}` }}>
+      <Box
+        mx="auto"
+        px={8}
+        py={4}
+        rounded="lg"
+        shadow="lg"
+        bg={useColorModeValue("white", "gray.800")}
+        maxW="2xl"
+      >
+        <Flex justifyContent="space-between" alignItems="center">
+          <chakra.span
+            fontSize="sm"
+            color={useColorModeValue("gray.600", "gray.400")}
+          >
+            Final date {props.data.date}
+          </chakra.span>
+          <Box
+            px={3}
+            py={1}
+            bg={GetColorByRubricState(props.data.state)}
+            color="gray.100"
+            fontSize="sm"
+            fontWeight="700"
+            rounded="md"
+          >
+            {props.data.state}
+          </Box>
+        </Flex>
 
-
-const RubricCard = (props: Rubric) => {
-    
-}
-
-export const RubricPage = () => {
-    const history = useHistory()
-    const { search } = useLocation()
-    const [course, setCourse] = useState(queryString.parse(search).name)
-    const [code, setCode] = useState(queryString.parse(search).cod)
-    const [rubrik, setRubric] = useState<Array<Rubric>>([{
-        code: "", 
-        state: "", 
-        evaluation: "", 
-        date: "", 
-        week: "", 
-        evidence: "", 
-        activity: "",
-        canEdit: "",
-        students: ""
-    }])
-
-
-    useEffect(() => {
-        GetRubrics(code).then((val: RubricResponse) => {
-            console.log(val)
-            const userRubric = val.data
-            setRubric(userRubric)
-        }).catch((err) => {
-            console.log(err)
-        })
-
-    }, [])
-
-
-    return (<>
-        <Header></Header>
-        <Box p={7}>
-            <SimpleGrid columns={3} spacing={5}>
-                <Box>
-                    <Button leftIcon={<ArrowBackIcon />} colorScheme="teal" variant="outline" onClick={() => { history.push("/main") }}>
-                        Regresar a mis cursos
-                    </Button>
-                </Box>
-
-                <Box style={{ display: "flex", justifyContent: "center" }} >
-                    <Heading>
-                        {course}
-                    </Heading>
-                </Box>
-
-            </SimpleGrid>
+        <Box mt={2}>
+          <Box color={useColorModeValue("gray.700", "white")}>
+            <Heading size="md">{props.data.evidence}</Heading>
+            <Heading size="sm">{props.data.evaluation}</Heading>
+            <Heading size="xs">Total estudiantes: {props.data.students}</Heading>
+          </Box>
+          <chakra.p mt={2} color={useColorModeValue("gray.600", "gray.300")} minH={120}>
+            {props.data.activity}
+          </chakra.p>
         </Box>
 
-    </>)
-}
+        <Flex justifyContent="space-between" alignItems="center" mt={4}>
+          <Box color={useColorModeValue("brand.600", "brand.400")}>
+            {props.data.code}
+          </Box>
 
+          <Flex alignItems="center">
+            <Box
+              color={useColorModeValue("gray.700", "gray.200")}
+              fontWeight="700"
+            >
+                {props.data.week}
+            </Box>
+          </Flex>
+        </Flex>
+      </Box>
+    </Flex>
+  );
+};
+
+export const RubricPage = () => {
+  const history = useHistory();
+  const { search } = useLocation();
+  const [course, setCourse] = useState(queryString.parse(search).name);
+  const [code, setCode] = useState(queryString.parse(search).cod);
+  const [rubrik, setRubric] = useState<Array<Rubric | null>>([]);
+
+  useEffect(() => {
+    GetRubrics(code)
+      .then((val: RubricResponse) => {
+        console.log(val);
+        const userRubric = val.data;
+        setRubric(userRubric);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <>
+      <Header></Header>
+      <Box p={7}>
+        <SimpleGrid columns={3} spacing={5}>
+          <Box>
+            <Button
+              leftIcon={<ArrowBackIcon />}
+              colorScheme="teal"
+              variant="outline"
+              onClick={() => {
+                history.push("/main");
+              }}
+            >
+              Regresar a mis cursos
+            </Button>
+          </Box>
+
+          <Box style={{ display: "flex", justifyContent: "center" }}>
+            <Heading>{course}</Heading>
+          </Box>
+        </SimpleGrid>
+        <Box mt={10}>
+          <SimpleGrid columns={2} spacing={10} overflow="scroll" maxH={600}>
+            { 
+                rubrik && rubrik.length > 0 ? (
+                    //@ts-ignore
+                    rubrik.map((val: Rubric) => {
+                        //@ts-ignore
+                        return <RubricCard data={val}> </RubricCard>
+                    })
+                ) : null
+            }
+          </SimpleGrid>
+        </Box>
+      </Box>
+    </>
+  );
+};

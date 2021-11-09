@@ -20,7 +20,7 @@ const CourseCard = (props: Courses) => {
   }
 
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" backgroundColor={getColor()} onClick={() => setToRubric(props)}>
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" backgroundColor={getColor()} onClick={() => setToRubric(props)} style={{ cursor: "pointer" }} _hover={{ opacity: "0.5" }}>
       <Box p="6">
         <Box display="flex" alignItems="baseline">
           <Badge borderRadius="full" px="2" colorScheme="teal">
@@ -73,7 +73,7 @@ export const CoursesPage = () => {
     <>
       <SimpleGrid columns={4} spacing={30} mt={100} ml={5}>
         {
-          userCourse[0].code.length !== 0 ?  userCourse?.map((val: Courses, i: number) => {
+          userCourse[0].code.length !== 0 ? userCourse?.map((val: Courses, i: number) => {
             return <CourseCard key={i} name={val.name} code={val.code}></CourseCard>
           }) : null
         }
