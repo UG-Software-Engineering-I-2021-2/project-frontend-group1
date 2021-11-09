@@ -32,10 +32,10 @@ export const LoginApp = (token: string): Promise<LoginResponse> => {
 }
 
 export const GetCourses = (): Promise<CoursesResponse> => {
-    return axiosEnv.post("/courses_username", { "semestre": "2021 - 2" })
+    return axiosEnv.post("/courses_username", { "semester": "2021 - 2" })
 }
 
 
 export const GetRubrics = (code: string): Promise<RubricResponse> => {
-    return axiosEnv.post("/rubrics_course", { "semestre": "2021 - 2", "course_code": code })
+    return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "course_code": code })
 }

@@ -8,30 +8,38 @@ import { GetRubrics } from "../../../api/ApiEndpoints";
 import { Rubric, RubricResponse } from "../../../interfaces/rubric";
 
 
+
+const RubricCard = (props: Rubric) => {
+    
+}
+
 export const RubricPage = () => {
     const history = useHistory()
     const { search } = useLocation()
     const [course, setCourse] = useState(queryString.parse(search).name)
     const [code, setCode] = useState(queryString.parse(search).cod)
     const [rubrik, setRubric] = useState<Array<Rubric>>([{
-        actividad: "",
-        codRubrica: "",
-        estado: "",
-        evaluacion: "",
-        evidencia: "",
-        fecha: "",
-        semana: ""
+        code: "", 
+        state: "", 
+        evaluation: "", 
+        date: "", 
+        week: "", 
+        evidence: "", 
+        activity: "",
+        canEdit: "",
+        students: ""
     }])
 
 
     useEffect(() => {
         GetRubrics(code).then((val: RubricResponse) => {
+            console.log(val)
             const userRubric = val.data
             setRubric(userRubric)
         }).catch((err) => {
             console.log(err)
         })
-        
+
     }, [])
 
 
@@ -56,3 +64,4 @@ export const RubricPage = () => {
 
     </>)
 }
+

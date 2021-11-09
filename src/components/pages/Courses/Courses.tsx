@@ -73,9 +73,9 @@ export const CoursesPage = () => {
     <>
       <SimpleGrid columns={4} spacing={30} mt={100} ml={5}>
         {
-          userCourse?.map((val: Courses, i: number) => {
+          userCourse[0].code.length !== 0 ?  userCourse?.map((val: Courses, i: number) => {
             return <CourseCard key={i} name={val.name} code={val.code}></CourseCard>
-          })
+          }) : null
         }
       </SimpleGrid>
     </>
