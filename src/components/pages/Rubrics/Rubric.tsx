@@ -129,9 +129,9 @@ export const RubricPage = () => {
             { 
                 rubrik && rubrik.length > 0 ? (
                     //@ts-ignore
-                    rubrik.map((val: Rubric) => {
+                    rubrik.map((val: Rubric, i: number) => {
                         //@ts-ignore
-                        return <RubricCard data={val}> </RubricCard>
+                        return <RubricCard key={i} data={val}> </RubricCard>
                     })
                 ) : null
             }
