@@ -8,10 +8,9 @@ import {
   Button,
   SimpleGrid,
   chakra,
-  Image,
+  Center,
   Flex,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { GetRubrics } from "../../../api/ApiEndpoints";
@@ -83,21 +82,33 @@ const RubricCard = (props: { data: Rubric }) => {
   );
 };
 
+export const NotFoundRubrics =() => {
+    return <Center>
+        <Heading>
+            No se encontrar las rubricas para este curso
+        </Heading>
+    </Center>
+}
+
 export const RubricPage = () => {
   const history = useHistory();
   const { search } = useLocation();
   const [course, setCourse] = useState(queryString.parse(search).name);
   const [code, setCode] = useState(queryString.parse(search).cod);
   const [rubrik, setRubric] = useState<Array<Rubric | null>>([]);
+ const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
+    setLoading(true)
     GetRubrics(code)
       .then((val: RubricResponse) => {
         console.log(val);
         const userRubric = val.data;
+        setLoading(false)
         setRubric(userRubric);
       })
       .catch((err) => {
+        setLoading(false)
         console.log(err);
       });
   }, []);
@@ -133,7 +144,7 @@ export const RubricPage = () => {
                         //@ts-ignore
                         return <RubricCard key={i} data={val}> </RubricCard>
                     })
-                ) : null
+                ) : loading ? <></> : <NotFoundRubrics/>
             }
           </SimpleGrid>
         </Box>
