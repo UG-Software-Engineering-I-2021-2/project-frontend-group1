@@ -69,8 +69,8 @@ export const Login = () => {
               boxShadow="md"
             >
               <Box>
-                <Text>
-                  Solo usuariaros permitidos podrán ingresar a la plataforma
+                <Text color="#FF8F7D">
+                  Solo usuarios permitidos podrán ingresar a la plataforma
                 </Text>
               </Box>
 
