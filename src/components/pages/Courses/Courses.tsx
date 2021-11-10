@@ -4,23 +4,28 @@ import { useHistory } from "react-router";
 import { GetCourses } from "../../../api/ApiEndpoints";
 import { CoursesResponse, Courses } from "../../../interfaces/courses";
 
-
 const getColor = (): string => {
   return "hsl(" + 360 * Math.random() + ',' +
     (25 + 70 * Math.random()) + '%,' +
     (85 + 10 * Math.random()) + '%)'
 }
 
+interface CoursesDisplayed extends Courses {
+  color: string,
+  display?: boolean
+}
 
-const CourseCard = (props: Courses) => {
+
+const CourseCard = (props: CoursesDisplayed) => {
   const history = useHistory()
 
   const setToRubric = (data: Courses) => {
     history.push(`/rubric?name=${data.name}&cod=${data.code}`)
   }
 
+  console.log(props.color)
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" backgroundColor={getColor()} onClick={() => setToRubric(props)} style={{ cursor: "pointer" }} _hover={{ opacity: "0.5" }}>
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" backgroundColor={props.color} onClick={() => setToRubric(props)} style={{ cursor: "pointer" }} _hover={{ opacity: "0.5" }}>
       <Box p="6">
         <Box display="flex" alignItems="baseline">
           <Badge borderRadius="full" px="2" colorScheme="teal">
@@ -45,9 +50,12 @@ const CourseCard = (props: Courses) => {
 }
 
 export const CoursesPage = () => {
-  const [userCourse, setUserCourses] = useState<Array<Courses>>([{
+  const [courseFilter, setCourseFilter] = useState("");
+  const [userCourse, setUserCourses] = useState<Array<CoursesDisplayed>>([{
     code: "",
-    name: ""
+    name: "",
+    display: false,
+    color: "",
   }])
 
   useEffect(() => {
@@ -61,20 +69,59 @@ export const CoursesPage = () => {
 
     GetCourses().then((val: CoursesResponse) => {
       const userCourses = val.data
-      setUserCourses(userCourses)
-      localStorage.setItem("courses", JSON.stringify(userCourses))
+      const coursesDisplayed = userCourses.map((val) => {
+        return {
+          "name": val.name,
+          "code": val.code,
+          "display": true,
+          "color": getColor(),
+        }
+      })
+
+      setUserCourses(coursesDisplayed)
+      localStorage.setItem("courses", JSON.stringify(coursesDisplayed))
 
     }).catch((err) => {
       console.log(err)
     })
   }, [])
 
+
+
+  const courseInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value;
+    setCourseFilter(name);
+
+    userCourse.map((course) => {
+      course.display = course.name.toLowerCase().includes(name.toLowerCase()) || course.code.toLowerCase().includes(name.toLowerCase())
+        ? true
+        : false;
+    });
+  };
+
   return (
     <>
-      <SimpleGrid columns={4} spacing={30} mt={100} ml={5}>
+      <Box style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "20px",
+      }}>
+        <Input
+          flex="0.3"
+          variant="outline"
+          placeholder="Seleccionar curso"
+          borderRadius="20"
+          fontSize="20"
+          padding="5"
+          value={courseFilter}
+          onChange={courseInputHandler}
+        />
+      </Box>
+      <SimpleGrid columns={4} spacing={30} mt={50} ml={5}>
         {
-          userCourse[0].code.length !== 0 ? userCourse?.map((val: Courses, i: number) => {
-            return <CourseCard key={i} name={val.name} code={val.code}></CourseCard>
+          userCourse[0].code.length !== 0 ? userCourse?.map((val: CoursesDisplayed, i: number) => {
+            return val.display ? <CourseCard key={i} color={val.color} name={val.name} code={val.code} ></CourseCard> : null
           }) : null
         }
       </SimpleGrid>
