@@ -37,9 +37,9 @@ const RubricCard = (props: { data: Rubric }) => {
         <Flex justifyContent="space-between" alignItems="center">
           <chakra.span
             fontSize="sm"
-            color={useColorModeValue("gray.600", "gray.400")}
+            color={props.data.state === "Fuera de fecha" ?  "#FF8F7D" : useColorModeValue("gray.600", "gray.400")}
           >
-            Final date {props.data.date}
+            {props.data.state === "Fuera de fecha" ?  "Out of date" : "Final date"} {props.data.date}
           </chakra.span>
           <Box
             px={3}

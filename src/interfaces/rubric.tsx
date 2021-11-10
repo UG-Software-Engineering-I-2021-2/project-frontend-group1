@@ -22,7 +22,7 @@ export const GetColorByRubricState = (state: string): string => {
     mapStateColor.set("Sin asignar", "#FF8F7D")
     mapStateColor.set("Aprobacion pendiente", "#F5B045")
     mapStateColor.set("Disponible para calificar", "#344B70")
-    mapStateColor.set("Fuera de fecha", "#4E5B66")
+    mapStateColor.set("Fuera de fecha", "#F75432")
     mapStateColor.set("Cumplidos", "#20BA53")
 
     return mapStateColor.get(state) || "#FFFFFF"
