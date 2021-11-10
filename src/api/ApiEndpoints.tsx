@@ -32,7 +32,8 @@ export const LoginApp = (token: string): Promise<LoginResponse> => {
 }
 
 export const GetCourses = (): Promise<CoursesResponse> => {
-    return axiosEnv.post("/courses_username", { "semester": "2021 - 2" })
+    const role = localStorage.getItem("role")
+    return axiosEnv.post("/courses_username", { "semester": "2021 - 2" , "role": role})
 }
 
 

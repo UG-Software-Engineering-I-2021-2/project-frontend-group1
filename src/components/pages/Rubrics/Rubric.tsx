@@ -22,9 +22,11 @@ import {
 
 const RubricCard = (props: { data: Rubric }) => {
   return (
-    <Flex  p={50} _hover={ { cursor: `${props.data.canEdit ? "pointer" : "not-allowed"}` }}>
+    <Flex   p={50}>
       <Box
+       _hover={ { cursor: `${props.data.canEdit ? "pointer" : "not-allowed"}` }}
         mx="auto"
+        minW={[300, 500, 700]}
         px={8}
         py={4}
         rounded="lg"
@@ -136,7 +138,7 @@ export const RubricPage = () => {
           </Box>
         </SimpleGrid>
         <Box mt={10}>
-          <SimpleGrid columns={2} spacing={10} overflow="scroll" maxH={600}>
+          <SimpleGrid columns={[1,2]} spacing={10} overflow="scroll" maxH={600}>
             { 
                 rubrik && rubrik.length > 0 ? (
                     //@ts-ignore
