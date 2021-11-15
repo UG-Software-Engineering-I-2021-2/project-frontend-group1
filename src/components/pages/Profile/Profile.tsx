@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { LoginApp } from "../../../api/ApiEndpoints";
+
 
 export const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();

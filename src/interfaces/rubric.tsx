@@ -18,12 +18,40 @@ export interface Rubric {
 
 
 export const GetColorByRubricState = (state: string): string => {
-    const mapStateColor = new Map<string,string>()
-    mapStateColor.set("Sin asignar", "#FF8F7D")
-    mapStateColor.set("Aprobacion pendiente", "#F5B045")
-    mapStateColor.set("Disponible para calificar", "#344B70")
-    mapStateColor.set("Fuera de fecha", "#F75432")
-    mapStateColor.set("Cumplidos", "#20BA53")
+    const selectedState = GetRubric(state)
+    if(!selectedState) {
+        return "#FFFFFF"
+    }
+    switch(selectedState) { 
+        case "Sin asignar": { 
+            return "#FF8F7D"
+        } 
+        case "Aprobacion pendiente": { 
+            return "#F5B045"
+        } 
+        case "Disponible para calificar": { 
+            return "#344B70"
+        } 
+        case "Fuera de fecha": { 
+            return "#F75432"
+        } 
+        case "Cumplidos": { 
+            return "#20BA53"
+        } 
+        default: { 
+            return "#FFFFFF"
+        } 
+     } 
+}
 
-    return mapStateColor.get(state) || "#FFFFFF"
+
+export const GetRubric = (state: string) => {
+    const mapStateColor = new Map<string,string>()
+    mapStateColor.set("Sin asignar", "Sin asignar")
+    mapStateColor.set("Aprobacion pendiente", "Aprobacion pendiente")
+    mapStateColor.set("Disponible para calificar", "Disponible para calificar")
+    mapStateColor.set("Fuera de fecha", "Fuera de fecha")
+    mapStateColor.set("Cumplidos", "Cumplidos")
+
+    return mapStateColor.get(state)
 }

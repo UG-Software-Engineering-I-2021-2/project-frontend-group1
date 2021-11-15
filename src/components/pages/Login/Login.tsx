@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
+import React from "react";
+import GoogleLogin from "react-google-login";
 import { useHistory } from "react-router";
 import { LoginApp } from "../../../api/ApiEndpoints";
 import { LoginResponse } from "../../../interfaces/login";

@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
+import React from "react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { CoursesPage } from "../Courses/Courses";
-import { LogOut } from "../LogOut/LogOut";
-
-import { useAuth0 } from "@auth0/auth0-react"
-import { useHistory } from "react-router";
 import { Header } from "../../templates/header/header";
 
 export const MainPage = () => {
