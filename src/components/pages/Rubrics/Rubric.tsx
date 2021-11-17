@@ -20,13 +20,13 @@ import {
   GetColorByRubricState,
 } from "../../../interfaces/rubric";
 
-const RubricCard = (props: { data: Rubric, course: string }) => {
+const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) => {
   const history = useHistory();
 
   const clickCreateRubric = () => {
     console.log("click")
     if (props.data.canEdit) {
-      history.push(`/edit-rubric?code=${props.data.code}&course=${props.course}`);
+      history.push(`/edit-rubric?code=${props.data.code}&course=${props.course}&courseCode=${props.courseCode}`);
     }
   }
 
@@ -154,7 +154,7 @@ export const RubricPage = () => {
                 //@ts-ignore
                 rubrik.map((val: Rubric, i: number) => {
                   //@ts-ignore
-                  return <RubricCard key={i} data={val} course={course}>  </RubricCard>
+                  return <RubricCard key={i} data={val} course={course} courseCode={code}>   </RubricCard>
                 })
               ) : loading ? <></> : <NotFoundRubrics />
             }

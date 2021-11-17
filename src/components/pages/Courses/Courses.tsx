@@ -119,7 +119,6 @@ export const CoursesPage = () => {
   const filterStatusHandler = (status: string) => {
     setCourseFilter("");
 
-    console.log(status)
     userCourse.map((course) => {
       if (course.nState[status] > 0 || !status) {
         course.display = true
