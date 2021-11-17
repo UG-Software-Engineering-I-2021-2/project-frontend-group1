@@ -5,6 +5,7 @@ import { GetCourses } from "../../../api/ApiEndpoints";
 import { Courses, CoursesResponse } from "../../../interfaces/courses";
 import { GetRubric } from "../../../interfaces/rubric";
 
+
 const getColor = (): string => {
   return "hsl(" + 360 * Math.random() + ',' +
     (25 + 70 * Math.random()) + '%,' +
@@ -117,11 +118,10 @@ export const CoursesPage = () => {
 
   const filterStatusHandler = (status: string) => {
     setCourseFilter("");
-    const st = GetRubric(status)
-    if (!st) return
 
+    console.log(status)
     userCourse.map((course) => {
-      if (course.nState[st] > 0) {
+      if (course.nState[status] > 0 || !status) {
         course.display = true
       } else {
         course.display = false

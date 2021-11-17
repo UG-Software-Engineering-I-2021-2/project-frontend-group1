@@ -15,6 +15,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import IdleTimer from 'react-idle-timer'
 import { RubricPage } from "./components/pages/Rubrics/Rubric";
+import { CreateNewRubric } from "./components/pages/Rubrics/CreateRubric/CreateNewRubric";
+
 
 
 const theme = extendTheme({
@@ -41,6 +43,7 @@ const App = () => {
       />
       <BrowserRouter>
         <Switch>
+          <Route exact path="/edit-rubric" render={(props) => <CreateNewRubric/>} />
           <Route exact path="/rubric" render={(props) => <RubricPage/>} />
           <Route exact path="/not-found" render={(props) => <NotFoundUser/>} />
           <Route exact path="/main" render={(props) => <MainPage></MainPage>} />

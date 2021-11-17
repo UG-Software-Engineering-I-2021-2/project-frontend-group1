@@ -41,3 +41,7 @@ export const GetRubrics = (code: string): Promise<RubricResponse> => {
     const role = localStorage.getItem("role")
     return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "courseCode": code, "role": role})
 }
+
+export const CreateRubric = (courseCode: string, rubricCode: string) => {
+    return axiosEnv.get(`/rubric_creation/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}`)
+}

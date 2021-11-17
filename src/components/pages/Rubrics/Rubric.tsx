@@ -20,26 +20,36 @@ import {
   GetColorByRubricState,
 } from "../../../interfaces/rubric";
 
-const RubricCard = (props: { data: Rubric }) => {
+const RubricCard = (props: { data: Rubric, course: string }) => {
+  const history = useHistory();
+
+  const clickCreateRubric = () => {
+    console.log("click")
+    if (props.data.canEdit) {
+      history.push(`/edit-rubric?code=${props.data.code}&course=${props.course}`);
+    }
+  }
+
   return (
-    <Flex   p={50}>
+    <Flex p={50}>
       <Box
-       _hover={ { cursor: `${props.data.canEdit ? "pointer" : "not-allowed"}` }}
+        _hover={{ cursor: `${props.data.canEdit ? "pointer" : "not-allowed"}` }}
         mx="auto"
         minW={[300, 500, 700]}
         px={8}
         py={4}
         rounded="lg"
         shadow="lg"
+        onClick={() => clickCreateRubric()}
         bg={useColorModeValue("white", "gray.800")}
         maxW="2xl"
       >
         <Flex justifyContent="space-between" alignItems="center">
           <chakra.span
             fontSize="sm"
-            color={props.data.state === "Fuera de fecha" ?  "#FF8F7D" : useColorModeValue("gray.600", "gray.400")}
+            color={props.data.state === "Fuera de fecha" ? "#FF8F7D" : useColorModeValue("gray.600", "gray.400")}
           >
-            {props.data.state === "Fuera de fecha" ?  "Out of date" : "Final date"} {props.data.date}
+            {props.data.state === "Fuera de fecha" ? "Out of date" : "Final date"} {props.data.date}
           </chakra.span>
           <Box
             px={3}
@@ -56,8 +66,8 @@ const RubricCard = (props: { data: Rubric }) => {
 
         <Box mt={2}>
           <Box color={useColorModeValue("gray.700", "white")}>
-            <Heading size="md">{props.data.evidence}</Heading>
-            <Heading size="sm">{props.data.evaluation}</Heading>
+            <Heading size="md">Evidencia: {props.data.evidence}</Heading>
+            <Heading size="sm">Evaluacion: {props.data.evaluation}</Heading>
             <Heading size="xs">Total estudiantes: {props.data.students}</Heading>
           </Box>
           <chakra.p mt={2} color={useColorModeValue("gray.600", "gray.300")} minH={120}>
@@ -75,7 +85,7 @@ const RubricCard = (props: { data: Rubric }) => {
               color={useColorModeValue("gray.700", "gray.200")}
               fontWeight="700"
             >
-                {props.data.week}
+              {props.data.week}
             </Box>
           </Flex>
         </Flex>
@@ -84,12 +94,12 @@ const RubricCard = (props: { data: Rubric }) => {
   );
 };
 
-export const NotFoundRubrics =() => {
-    return <Center>
-        <Heading>
-            No se encontrar las rubricas para este curso
-        </Heading>
-    </Center>
+export const NotFoundRubrics = () => {
+  return <Center>
+    <Heading>
+      No se encontrar las rubricas para este curso
+    </Heading>
+  </Center>
 }
 
 export const RubricPage = () => {
@@ -98,7 +108,7 @@ export const RubricPage = () => {
   const [course, setCourse] = useState(queryString.parse(search).name);
   const [code, setCode] = useState(queryString.parse(search).cod);
   const [rubrik, setRubric] = useState<Array<Rubric | null>>([]);
- const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     setLoading(true)
@@ -138,15 +148,15 @@ export const RubricPage = () => {
           </Box>
         </SimpleGrid>
         <Box mt={10}>
-          <SimpleGrid columns={[1,2]} spacing={10} overflow="scroll" maxH={600}>
-            { 
-                rubrik && rubrik.length > 0 ? (
-                    //@ts-ignore
-                    rubrik.map((val: Rubric, i: number) => {
-                        //@ts-ignore
-                        return <RubricCard key={i} data={val}> </RubricCard>
-                    })
-                ) : loading ? <></> : <NotFoundRubrics/>
+          <SimpleGrid columns={[1, 2]} spacing={10} overflow="scroll" maxH={600}>
+            {
+              rubrik && rubrik.length > 0 ? (
+                //@ts-ignore
+                rubrik.map((val: Rubric, i: number) => {
+                  //@ts-ignore
+                  return <RubricCard key={i} data={val} course={course}>  </RubricCard>
+                })
+              ) : loading ? <></> : <NotFoundRubrics />
             }
           </SimpleGrid>
         </Box>

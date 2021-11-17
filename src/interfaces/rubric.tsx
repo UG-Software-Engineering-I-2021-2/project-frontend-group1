@@ -52,6 +52,6 @@ export const GetRubric = (state: string) => {
     mapStateColor.set("Disponible para calificar", "Disponible para calificar")
     mapStateColor.set("Fuera de fecha", "Fuera de fecha")
     mapStateColor.set("Cumplidos", "Cumplidos")
-
+    mapStateColor.set("", "")
     return mapStateColor.get(state)
 }
