@@ -47,6 +47,5 @@ export const GetRubricCreation = (courseCode: string, rubricCode: string) => {
 }
 
 export const SaveRubric = (data: {content: any,activity:string, rubricCode:string,semester:string, courseCode: string}) => {
-    console.log("xd", { ...data, onlySave: true })
     return axiosEnv.post("/rubric_creation", { ...data, onlySave: true })
 }
