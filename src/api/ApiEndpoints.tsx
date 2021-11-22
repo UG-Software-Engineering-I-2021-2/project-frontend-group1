@@ -42,6 +42,11 @@ export const GetRubrics = (code: string): Promise<RubricResponse> => {
     return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "courseCode": code, "role": role})
 }
 
-export const CreateRubric = (courseCode: string, rubricCode: string) => {
+export const GetRubricCreation = (courseCode: string, rubricCode: string) => {
     return axiosEnv.get(`/rubric_creation/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}`)
+}
+
+export const SaveRubric = (data: {content: any,activity:string, rubricCode:string,semester:string, courseCode: string}) => {
+    console.log("xd", { ...data, onlySave: true })
+    return axiosEnv.post("/rubric_creation", { ...data, onlySave: true })
 }
