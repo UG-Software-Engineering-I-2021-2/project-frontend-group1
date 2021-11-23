@@ -147,16 +147,21 @@ export const CreateNewRubric = () => {
   const [code, setCode] = useState(queryString.parse(search).code);
   const [courseCode, setCourseCode] = useState(queryString.parse(search).courseCode)
   const [rubricInformation, setRubricInformation] = useState<CreateRubricInterface>()
-
+  const [title, setTitle] = useState("No title")
+  const [activity, setActivity] = useState("")
   const [rows, setRows] = useState([defaultState]);
 
 
   useEffect(() => {
     GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
       console.log(val)
-      const rubricContent = JSON.parse(val.data[0].content)
-      setRows(rubricContent)
+      if(val.data[0].content){
+        const rubricContent = JSON.parse(val.data[0].content)
+        setRows(rubricContent)
+      }
       const rubricInfo = val.data[0]
+      setTitle(rubricInfo.title)
+      setActivity(rubricInfo.activity)
       setRubricInformation(rubricInfo)
     }).catch((err) => {
       console.log(err)
@@ -185,7 +190,7 @@ export const CreateNewRubric = () => {
 
   const Save = () => {
 
-    SaveRubric({ content: rows, title: rubricInformation?.title || "No title", activity: rubricInformation?.activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code }).then((val) => {
+    SaveRubric({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code }).then((val) => {
       console.log("save new rubric", val)
     }).catch((err) => {
       console.log(err)
@@ -238,7 +243,7 @@ export const CreateNewRubric = () => {
             </GridItem>
             <GridItem rowSpan={2} colStart={2} colSpan={3} >
               <Box style={{ display: "flex", justifyContent: "center" }}>
-              <Editable defaultValue={rubricInformation?.activity || "No title"}>
+              <Editable value={activity}  onChange={(e) =>{ setActivity(e)}}>
                 <EditablePreview />
                 <EditableInput />
               </Editable>
@@ -278,7 +283,7 @@ export const CreateNewRubric = () => {
 
           <Box minH={500}>
             <Center mt={20}>
-              <Editable   fontSize="2xl" defaultValue={rubricInformation?.title || "No title"}>
+              <Editable   fontSize="2xl" value={title} onChange={(e) => setTitle(e)}>
                 <EditablePreview />
                 <EditableInput />
               </Editable>
