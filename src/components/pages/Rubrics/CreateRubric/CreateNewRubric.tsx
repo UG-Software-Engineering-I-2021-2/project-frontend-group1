@@ -117,7 +117,7 @@ const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, 
             placeholder="Escriba el descriptior no aceptable..."
             size="sm"
           />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("endesarrollo", { "points": value, "value": noaceptable.value })}>
+          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("noaceptable", { "points": value, "value": noaceptable.value })}>
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -153,6 +153,7 @@ export const CreateNewRubric = () => {
 
   useEffect(() => {
     GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
+      console.log(val)
       const rubricContent = JSON.parse(val.data[0].content)
       setRows(rubricContent)
       const rubricInfo = val.data[0]
