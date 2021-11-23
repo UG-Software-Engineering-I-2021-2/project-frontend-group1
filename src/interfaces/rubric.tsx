@@ -21,6 +21,7 @@ export interface CreateRubricResponse {
     data: Array<CreateRubricInterface>
 }
 export interface CreateRubricInterface {
+    title: string,
     activity: string,
     competence: string,
     course: string,
@@ -28,12 +29,35 @@ export interface CreateRubricInterface {
     criteriaLevel: number,
     cycles: string,
     date: string,
-    descriptors: string,
+    content: string,
     dimensions: number,
     evaluation: string,
     evidence: string,
     week: string
 }
+
+
+export interface RubricContent {
+    dimensiones: {
+      value: string
+    },
+    excelente: {
+      value: string,
+      points:  number
+    },
+    bueno: {
+      value: string,
+      points:  number
+    },
+    endesarrollo: {
+      value: string,
+      points:  number
+    },
+    noaceptable: {
+      value: string,
+      points:  number
+    },
+  }
 
 
 export const GetColorByRubricState = (state: string): string => {

@@ -46,6 +46,6 @@ export const GetRubricCreation = (courseCode: string, rubricCode: string) => {
     return axiosEnv.get(`/rubric_creation/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}`)
 }
 
-export const SaveRubric = (data: {content: any,activity:string, rubricCode:string,semester:string, courseCode: string}) => {
+export const SaveRubric = (data: {title: string, content: any,activity:string, rubricCode:string,semester:string, courseCode: string}) => {
     return axiosEnv.post("/rubric_creation", { ...data, onlySave: true })
 }

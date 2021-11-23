@@ -3,11 +3,12 @@ import { useHistory, useLocation } from "react-router";
 import queryString from "query-string";
 import {
   Box, Heading, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper,
-  NumberDecrementStepper, Button, Textarea, SimpleGrid, Grid, GridItem
+  NumberDecrementStepper, Button, Textarea, SimpleGrid, Grid, GridItem, Center, Editable, EditablePreview,
+  EditableInput
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { GetRubricCreation, SaveRubric } from "../../../../api/ApiEndpoints";
-import { CreateRubricInterface, CreateRubricResponse } from "../../../../interfaces/rubric";
+import { CreateRubricInterface, CreateRubricResponse, RubricContent } from "../../../../interfaces/rubric";
 
 
 import { _ } from "gridjs-react";
@@ -16,7 +17,7 @@ import { Header } from "../../../templates/header/header";
 
 
 const HeaderRubric = () => {
-  return (<Grid templateColumns="repeat(6, 1fr)" gap={6} mb={5} ml={20}>
+  return (<Grid templateColumns="repeat(6, 1fr)" gap={6} mb={5} ml={20} mt={5} >
     <Box style={{ display: "flex", justifyContent: "center" }}>
       <Heading as="p" size="md">
         Dimensiones
@@ -49,7 +50,7 @@ const HeaderRubric = () => {
 const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, noaceptable }) => {
   return (
     <>
-      <Grid templateColumns="repeat(6, 1fr)" gap={6} ml={20} mt ={5}>
+      <Grid templateColumns="repeat(6, 1fr)" gap={6} ml={20} mt={5}>
         <Box>
           <Textarea
             value={dimensiones.value}
@@ -62,11 +63,11 @@ const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, 
         <Box>
           <Textarea
             value={excelente.value}
-            onChange={e => onChange("excelente", { "value": e.target.value, "points": "1.0" })}
+            onChange={e => onChange("excelente", { "value": e.target.value, "points": 1.0 })}
             placeholder="Escriba el descriptor excelente..."
             size="sm"
           />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("excelente", { "points": `${value}`, "value": excelente.value })}>
+          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("excelente", { "points": value, "value": excelente.value })}>
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -78,12 +79,12 @@ const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, 
         <Box>
           <Textarea
             value={bueno.value}
-            onChange={e => onChange("bueno", { "value": e.target.value, "points": "1.0" })}
+            onChange={e => onChange("bueno", { "value": e.target.value, "points": 1.0 })}
             placeholder="Escriba el descriptor bueno..."
             size="sm"
           />
 
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("bueno", { "points": `${value}`, "value": bueno.value })}>
+          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("bueno", { "points": value, "value": bueno.value })}>
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -95,11 +96,11 @@ const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, 
         <Box>
           <Textarea
             value={endesarrollo.value}
-            onChange={e => onChange("endesarrollo", { "value": e.target.value, "points": "1.0" })}
+            onChange={e => onChange("endesarrollo", { "value": e.target.value, "points": 1.0 })}
             placeholder="Escriba el descriptor en desarrollo..."
             size="sm"
           />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("endesarrollo", { "points": `${value}`, "value": endesarrollo.value })}>
+          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("endesarrollo", { "points": value, "value": endesarrollo.value })}>
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -112,11 +113,11 @@ const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, 
 
           <Textarea
             value={noaceptable.value}
-            onChange={e => onChange("noaceptable", { "value": e.target.value, "points": "1.0" })}
+            onChange={e => onChange("noaceptable", { "value": e.target.value, "points": 1.0 })}
             placeholder="Escriba el descriptior no aceptable..."
             size="sm"
           />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("endesarrollo", { "points": `${value}`, "value": noaceptable.value })}>
+          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("endesarrollo", { "points": value, "value": noaceptable.value })}>
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -152,6 +153,8 @@ export const CreateNewRubric = () => {
 
   useEffect(() => {
     GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
+      const rubricContent = JSON.parse(val.data[0].content)
+      setRows(rubricContent)
       const rubricInfo = val.data[0]
       setRubricInformation(rubricInfo)
     }).catch((err) => {
@@ -181,8 +184,8 @@ export const CreateNewRubric = () => {
 
   const Save = () => {
 
-    SaveRubric({ content: rows, activity: rubricInformation?.activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code}).then((val) => {
-      console.log("save new rubric" , val)
+    SaveRubric({ content: rows, title: rubricInformation?.title || "No title", activity: rubricInformation?.activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code }).then((val) => {
+      console.log("save new rubric", val)
     }).catch((err) => {
       console.log(err)
     })
@@ -234,7 +237,10 @@ export const CreateNewRubric = () => {
             </GridItem>
             <GridItem rowSpan={2} colStart={2} colSpan={3} >
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                {rubricInformation?.activity}
+              <Editable defaultValue={rubricInformation?.activity || "No title"}>
+                <EditablePreview />
+                <EditableInput />
+              </Editable>
               </Box>
             </GridItem>
             <GridItem rowSpan={2} colStart={5} colSpan={1}>
@@ -261,20 +267,31 @@ export const CreateNewRubric = () => {
               </Box>
             </GridItem>
           </Grid>
-          <Button onClick={handleOnAdd}>Agregar</Button>
-          <Button onClick={Save}>Save</Button>
+          <Grid templateColumns="repeat(5, 2fr)" gap={6}>
+            <Box></Box>
+            <Button onClick={handleOnAdd}>Agregar nuevo descriptor</Button>
+            <Button onClick={Save}>Guardar</Button>
+            <Button onClick={Save}>Enviar a revision</Button>
+            <Box></Box>
+          </Grid>
 
-          <HeaderRubric />
-          {rows.map((row, index) => (
-            <Row
-              {...row}
-              onChange={(name, value) => handleOnChange(index, name, value)}
-              onRemove={() => handleOnRemove(index)}
-              key={index}
-            />
-          ))}
-
-
+          <Box minH={500}>
+            <Center mt={20}>
+              <Editable   fontSize="2xl" defaultValue={rubricInformation?.title || "No title"}>
+                <EditablePreview />
+                <EditableInput />
+              </Editable>
+            </Center>
+            <HeaderRubric />
+            {rows.map((row, index) => (
+              <Row
+                {...row}
+                onChange={(name, value) => handleOnChange(index, name, value)}
+                onRemove={() => handleOnRemove(index)}
+                key={index}
+              />
+            ))}
+          </Box>
 
         </Box>
       </Box>
