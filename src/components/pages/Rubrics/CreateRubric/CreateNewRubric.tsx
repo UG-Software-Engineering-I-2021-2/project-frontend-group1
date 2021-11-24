@@ -59,7 +59,8 @@ export const CreateNewRubric = () => {
 
     GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
       if (val.data[0].content) {
-        const rubricContent = JSON.parse(val.data[0].content)
+        let rubricContent = JSON.parse(val.data[0].content) 
+        console.log(rubricContent)
         setRows(rubricContent)
       }
       const rubricInfo = val.data[0]
@@ -134,6 +135,7 @@ export const CreateNewRubric = () => {
         status: "error",
         isClosable: true
       })
+      return
     }
 
     RubricReviewPetition({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {

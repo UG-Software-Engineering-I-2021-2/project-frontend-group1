@@ -27,7 +27,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                         placeholder="Escriba el descriptor excelente..."
                         size="sm"
                     /> : <Text> {excelente.value} </Text>}
-                    {isEditable ? <NumberInput size="xs" defaultValue={1} max={20} step={0.5} min={0} onChange={value => onChange("excelente", { "points": value, "value": excelente.value })}>
+                    {isEditable ? <NumberInput size="xs" value={excelente.points}  max={20}  step={0.5} min={0} onChange={value => onChange("excelente", { "points": value, "value": excelente.value })}>
                         <NumberInputField />
                         <NumberInputStepper>
                             <NumberIncrementStepper />
@@ -43,7 +43,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                         placeholder="Escriba el descriptor bueno..."
                         size="sm"
                     />
-                        <NumberInput size="xs" defaultValue={1} max={20} step={0.5}  min={0}  onChange={value => onChange("bueno", { "points": value, "value": bueno.value })}>
+                        <NumberInput size="xs" value={bueno.points}  max={20} step={0.5}  min={0}  onChange={value => onChange("bueno", { "points": value, "value": bueno.value })}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -64,7 +64,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                             placeholder="Escriba el descriptor en desarrollo..."
                             size="sm"
                         />
-                            <NumberInput size="xs" defaultValue={1} max={20} step={0.5}  min={0}  onChange={value => onChange("endesarrollo", { "points": value, "value": endesarrollo.value })}>
+                            <NumberInput size="xs" value={endesarrollo.points}  max={20} step={0.5}  min={0}  onChange={value => onChange("endesarrollo", { "points": value, "value": endesarrollo.value })}>
                                 <NumberInputField />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
@@ -88,7 +88,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                             placeholder="Escriba el descriptior no aceptable..."
                             size="sm"
                         />
-                            <NumberInput size="xs" defaultValue={1} max={20} step={0.5}  min={0}  onChange={value => onChange("noaceptable", { "points": value, "value": noaceptable.value })}>
+                            <NumberInput size="xs" value={noaceptable.points}  max={20} step={0.5}  min={0}  onChange={value => onChange("noaceptable", { "points": value, "value": noaceptable.value })}>
                                 <NumberInputField />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
