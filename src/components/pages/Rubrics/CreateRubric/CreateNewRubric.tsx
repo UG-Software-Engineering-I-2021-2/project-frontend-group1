@@ -2,146 +2,48 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import queryString from "query-string";
 import {
-  Box, Heading, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper,
-  NumberDecrementStepper, Button, Textarea, SimpleGrid, Grid, GridItem, Center, Editable, EditablePreview,
-  EditableInput
+  Box, Heading, Button, SimpleGrid, Grid, GridItem, Center, Editable, EditablePreview,
+  EditableInput, Textarea, Text
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { GetRubricCreation, SaveRubric } from "../../../../api/ApiEndpoints";
-import { CreateRubricInterface, CreateRubricResponse, RubricContent } from "../../../../interfaces/rubric";
-
+import { GetRubricCreation, SaveRubric, RubricReviewPetition } from "../../../../api/ApiEndpoints";
+import { CreateRubricInterface, CreateRubricResponse } from "../../../../interfaces/rubric";
+import { useToast } from "@chakra-ui/react"
 
 import { _ } from "gridjs-react";
 import { Header } from "../../../templates/header/header";
 
+import { Row } from "./Row"
+import { HeaderRubric } from "./HeaderRubric"
 
 
-const HeaderRubric = () => {
-  return (<Grid templateColumns="repeat(6, 1fr)" gap={6} mb={5} ml={20} mt={5} >
-    <Box style={{ display: "flex", justifyContent: "center" }}>
-      <Heading as="p" size="md">
-        Dimensiones
-      </Heading>
-    </Box>
-    <Box style={{ display: "flex", justifyContent: "center" }}>
-      <Heading as="p" size="md">
-        Excelente
-      </Heading>
-    </Box>
-    <Box style={{ display: "flex", justifyContent: "center" }}>
-      <Heading as="p" size="md">
-        Bueno
-      </Heading>
-    </Box>
-    <Box style={{ display: "flex", justifyContent: "center" }}>
-      <Heading as="p" size="md">
-        En desarrollo
-      </Heading>
-    </Box>
-    <Box style={{ display: "flex", justifyContent: "center" }}>
-      <Heading as="p" size="md">
-        No aceptable
-      </Heading>
-    </Box>
-  </Grid>)
-}
-
-
-const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, noaceptable }) => {
-  return (
-    <>
-      <Grid templateColumns="repeat(6, 1fr)" gap={6} ml={20} mt={5}>
-        <Box>
-          <Textarea
-            value={dimensiones.value}
-            onChange={e => onChange("dimensiones", { "value": e.target.value })}
-            placeholder="Escriba el descriptor de la dimension..."
-            size="sm"
-          />
-        </Box>
-
-        <Box>
-          <Textarea
-            value={excelente.value}
-            onChange={e => onChange("excelente", { "value": e.target.value, "points": 1.0 })}
-            placeholder="Escriba el descriptor excelente..."
-            size="sm"
-          />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("excelente", { "points": value, "value": excelente.value })}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Box>
-
-        <Box>
-          <Textarea
-            value={bueno.value}
-            onChange={e => onChange("bueno", { "value": e.target.value, "points": 1.0 })}
-            placeholder="Escriba el descriptor bueno..."
-            size="sm"
-          />
-
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("bueno", { "points": value, "value": bueno.value })}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Box>
-
-        <Box>
-          <Textarea
-            value={endesarrollo.value}
-            onChange={e => onChange("endesarrollo", { "value": e.target.value, "points": 1.0 })}
-            placeholder="Escriba el descriptor en desarrollo..."
-            size="sm"
-          />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("endesarrollo", { "points": value, "value": endesarrollo.value })}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </Box>
-
-        <Box>
-
-          <Textarea
-            value={noaceptable.value}
-            onChange={e => onChange("noaceptable", { "value": e.target.value, "points": 1.0 })}
-            placeholder="Escriba el descriptior no aceptable..."
-            size="sm"
-          />
-          <NumberInput size="xs" defaultValue={1} max={20} step={0.5} onChange={value => onChange("noaceptable", { "points": value, "value": noaceptable.value })}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-
-        </Box>
-        <Button w="25%" onClick={onRemove}>X</Button>
-      </Grid>
-    </>
-  );
-}
 
 const defaultState = {
-  dimensiones: "",
-  excelente: "",
-  bueno: "",
-  endesarrollo: "",
-  noaceptable: ""
+  dimensiones: {
+    value: "",
+    points: 1,
+  },
+  excelente: {
+    value: "",
+    points: 1,
+  },
+  bueno: {
+    value: "",
+    points: 1,
+  },
+  endesarrollo: {
+    value: "",
+    points: 1,
+  },
+  noaceptable: {
+    value: "",
+    points: 1,
+  }
 };
 
 export const CreateNewRubric = () => {
   const history = useHistory();
+  const toast = useToast()
   const { search } = useLocation();
   const [course, setCourse] = useState(queryString.parse(search).course);
   const [code, setCode] = useState(queryString.parse(search).code);
@@ -151,20 +53,26 @@ export const CreateNewRubric = () => {
   const [activity, setActivity] = useState("")
   const [rows, setRows] = useState([defaultState]);
 
+  const [isEditable, setIsEditable] = useState<boolean>(localStorage.getItem("role") === "Docente")
 
   useEffect(() => {
+
     GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
-      console.log(val)
-      if(val.data[0].content){
+      if (val.data[0].content) {
         const rubricContent = JSON.parse(val.data[0].content)
         setRows(rubricContent)
       }
       const rubricInfo = val.data[0]
       setTitle(rubricInfo.title)
       setActivity(rubricInfo.activity)
+      setIsEditable(rubricInfo.state === "Sin asignar")
       setRubricInformation(rubricInfo)
     }).catch((err) => {
-      console.log(err)
+      toast({
+        title: "We have a issue, try again please",
+        status: "error",
+        isClosable: true,
+      })
     })
   }, [])
 
@@ -189,11 +97,58 @@ export const CreateNewRubric = () => {
   };
 
   const Save = () => {
-
-    SaveRubric({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code }).then((val) => {
-      console.log("save new rubric", val)
+    SaveRubric({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {
+      toast({
+        title: "La rubrica se ha guardado correctamente",
+        status: "success",
+        isClosable: true,
+      })
     }).catch((err) => {
-      console.log(err)
+      toast({
+        title: "Tuvimos problemas tratando de guardar la rubrica, por favor intentelo en otro momento",
+        status: "error",
+        isClosable: true,
+      })
+    })
+  }
+
+  const ReviewPetition = () => {
+    let excelente  = 0, bueno = 0, endesarrollo = 0, noaceptable = 0
+    rows.forEach((val) => {
+      excelente += Number(val.excelente.points)
+      bueno += Number(val.bueno.points)
+      endesarrollo += Number(val.endesarrollo.points)
+      noaceptable += Number(val.noaceptable.points)
+      if(excelente < bueno || bueno < endesarrollo || endesarrollo < noaceptable) {
+        toast({
+          title:"No es posible esa combinacion de notas, por favor, reviselo antes de mandar.",
+          status: "error",
+          isClosable: true
+        })
+        return
+      }
+    })
+    if(excelente !== 20) {
+      toast({
+        title: "El valor de excelente no debe exceder los 20 puntos y no puede ser menor a los 20 puntos",
+        status: "error",
+        isClosable: true
+      })
+    }
+
+    RubricReviewPetition({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {
+      toast({
+        title: "Se ha enviado correctamente un email al coordinador, por favor espere su revision.",
+        status: "success",
+        isClosable: true,
+      })
+      setIsEditable(false)
+    }).catch((err) => {
+      toast({
+        title: "Tuvimos problemas tratando de enviar el mensaje, por favor intentelo en otro momento",
+        status: "error",
+        isClosable: true,
+      })
     })
   }
 
@@ -243,10 +198,13 @@ export const CreateNewRubric = () => {
             </GridItem>
             <GridItem rowSpan={2} colStart={2} colSpan={3} >
               <Box style={{ display: "flex", justifyContent: "center" }}>
-              <Editable value={activity}  onChange={(e) =>{ setActivity(e)}}>
-                <EditablePreview />
-                <EditableInput />
-              </Editable>
+                {
+                  isEditable ? <Textarea
+                    value={activity}
+                    onChange={(e) => { setActivity(e.target.value) }}
+                    size="md"
+                  /> : <Text> {activity} </Text>
+                }
               </Box>
             </GridItem>
             <GridItem rowSpan={2} colStart={5} colSpan={1}>
@@ -273,32 +231,40 @@ export const CreateNewRubric = () => {
               </Box>
             </GridItem>
           </Grid>
-          <Grid templateColumns="repeat(5, 2fr)" gap={6}>
-            <Box></Box>
-            <Button onClick={handleOnAdd}>Agregar nuevo descriptor</Button>
-            <Button onClick={Save}>Guardar</Button>
-            <Button onClick={Save}>Enviar a revision</Button>
-            <Box></Box>
-          </Grid>
-
+          {
+            isEditable ?
+              (<Grid templateColumns="repeat(5, 2fr)" gap={6}>
+                <Box></Box>
+                <Button onClick={handleOnAdd}>Agregar nuevo descriptor</Button>
+                <Button onClick={Save}>Guardar</Button>
+                <Button onClick={ReviewPetition}>Enviar a revision</Button>
+                <Box></Box>
+              </Grid>) : localStorage.getItem("role") === "Calidad" ? (<Grid templateColumns="repeat(5, 2fr)" gap={6}>
+                <Box></Box>
+                <Box></Box>
+                <Button onClick={console.log}>Aprovar</Button>
+                <Button onClick={console.log}>Declinar</Button>
+                <Box></Box>
+              </Grid>) : null
+          }
           <Box minH={500}>
             <Center mt={20}>
-              <Editable   fontSize="2xl" value={title} onChange={(e) => setTitle(e)}>
+              {isEditable ? <Editable fontSize="2xl" value={title} onChange={(e) => setTitle(e)}>
                 <EditablePreview />
                 <EditableInput />
-              </Editable>
+              </Editable> : <Heading mb={5}> {title} </Heading>}
             </Center>
-            <HeaderRubric />
+            <HeaderRubric isEditable={isEditable} />
             {rows.map((row, index) => (
               <Row
                 {...row}
                 onChange={(name, value) => handleOnChange(index, name, value)}
                 onRemove={() => handleOnRemove(index)}
                 key={index}
+                isEditable={isEditable}
               />
             ))}
           </Box>
-
         </Box>
       </Box>
     </>

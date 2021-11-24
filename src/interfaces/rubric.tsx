@@ -25,6 +25,7 @@ export interface CreateRubricInterface {
     activity: string,
     competence: string,
     course: string,
+    state: string,
     criteria: string,
     criteriaLevel: number,
     cycles: string,
