@@ -191,15 +191,14 @@ export const CreateNewRubric = () => {
       title: title,
       comment: comment
     }).then((val) => {
-      console.log("Rubric accepted")
       toast({
-        title: "Se ha aprobado correctamente la rúbrica.",
+        title: "Se ha enviado correctamente el comentario para la rubrica rechazada.",
         status: "success",
         isClosable: true,
       })
     }).catch((err) => {
       toast({
-        title: "Tuvimos problemas tratando de aprobar la rubrica, por favor, intentalo nuevamente en unos minutos.",
+        title: "Tuvimos problemas tratando de enviar el comentario de la rubrica, por favor, intentalo nuevamente en unos minutos.",
         status: "error",
         isClosable: true,
       })
