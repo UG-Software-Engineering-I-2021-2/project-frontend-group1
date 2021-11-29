@@ -65,8 +65,8 @@ const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) 
 
         <Box mt={2}>
           <Box color={useColorModeValue("gray.700", "white")}>
-            <Heading size="lg">Titulo: {props.data.title || "No defined"}</Heading>
-            <Heading size="lg">Evaluacion: {props.data.evaluation}</Heading>
+            <Heading size="lg">Título: {props.data.title || "No defined"}</Heading>
+            <Heading size="lg">Evaluación: {props.data.evaluation}</Heading>
             <Heading size="md">Competencia: {props.data.competenceCode}</Heading>
             <Heading size="sm">Criterio de desempeño: {props.data.criteriaCode} nivel {props.data.level}</Heading>
             <Heading size="sm">Evidencia: {props.data.evidence}</Heading>
