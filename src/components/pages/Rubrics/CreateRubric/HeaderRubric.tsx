@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 
 export const HeaderRubric = ({isEditable}) => {
-    return (<Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"}  gap={6} mb={5} ml={20} mt={5} >
+    return (<Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"}   ml={20} p={5} backgroundColor="#1BA7CE" color="white">
         <Box style={{ display: "flex", justifyContent: "center" }}>
             <Heading as="p" size="md">
                 Dimensiones
@@ -32,6 +32,8 @@ export const HeaderRubric = ({isEditable}) => {
             <Heading as="p" size="md">
                 No aceptable
             </Heading>
+        </Box>
+        <Box >
         </Box>
     </Grid>)
 }

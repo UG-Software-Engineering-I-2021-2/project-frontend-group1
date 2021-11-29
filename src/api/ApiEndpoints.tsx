@@ -33,23 +33,44 @@ export const LoginApp = (token: string): Promise<LoginResponse> => {
 
 export const GetCourses = (): Promise<CoursesResponse> => {
     const role = localStorage.getItem("role")
-    return axiosEnv.post("/courses_username", { "semester": "2021 - 2" , "role": role})
+    return axiosEnv.post("/courses_username", { "semester": "2021 - 2", "role": role })
 }
 
 
 export const GetRubrics = (code: string): Promise<RubricResponse> => {
     const role = localStorage.getItem("role")
-    return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "courseCode": code, "role": role})
+    return axiosEnv.post("/rubrics_course", { "semester": "2021 - 2", "courseCode": code, "role": role })
 }
 
 export const GetRubricCreation = (courseCode: string, rubricCode: string) => {
     return axiosEnv.get(`/rubric_creation/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}`)
 }
 
-export const SaveRubric = (data: {title: string, content: any,activity:string,courseName:string, rubricCode:string,semester:string, courseCode: string}) => {
+export const SaveRubric = (data: { title: string, content: any, activity: string, courseName: string, rubricCode: string, semester: string, courseCode: string }) => {
     return axiosEnv.post("/rubric_creation", { ...data, onlySave: true })
 }
 
-export const RubricReviewPetition = (data: {title: string, content: any,activity:string,courseName:string, rubricCode:string,semester:string, courseCode: string}) => {
+export const RubricReviewPetition = (data: { title: string, content: any, activity: string, courseName: string, rubricCode: string, semester: string, courseCode: string }) => {
     return axiosEnv.post("/rubric_creation", { ...data, onlySave: false })
+}
+
+export const RubricRevisionPetitionAccepted = (data: {
+    rubricCode: string,
+    semester: string,
+    courseCode: string,
+    courseName: string,
+    title: string
+}) => {
+    return axiosEnv.post("/rubric_revision", { ...data, accepted: true, comment: "" })
+}
+
+export const RubricRevisionPetitionDecline = (data: {
+    rubricCode: string,
+    semester: string,
+    courseCode: string,
+    courseName: string,
+    title: string,
+    comment: string
+}) => {
+    return axiosEnv.post("/rubric_revision", { ...data, accepted: false })
 }

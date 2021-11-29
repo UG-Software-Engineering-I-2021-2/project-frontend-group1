@@ -24,7 +24,6 @@ const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) 
   const history = useHistory();
 
   const clickCreateRubric = () => {
-    console.log("click")
     if (props.data.canEdit) {
       history.push(`/edit-rubric?code=${props.data.code}&course=${props.course}&courseCode=${props.courseCode}`);
     }
@@ -66,9 +65,12 @@ const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) 
 
         <Box mt={2}>
           <Box color={useColorModeValue("gray.700", "white")}>
-            <Heading size="md">Evidencia: {props.data.evidence}</Heading>
-            <Heading size="sm">Evaluacion: {props.data.evaluation}</Heading>
-            <Heading size="xs">Total estudiantes: {props.data.students}</Heading>
+            <Heading size="lg">Titulo: {props.data.title || "No defined"}</Heading>
+            <Heading size="lg">Evaluacion: {props.data.evaluation}</Heading>
+            <Heading size="md">Competencia: {props.data.competenceCode}</Heading>
+            <Heading size="sm">Criterio de desempeño: {props.data.criteriaCode}</Heading>
+            <Heading size="sm">Evidencia: {props.data.evidence}</Heading>
+            <Heading size="sm">Total estudiantes: {props.data.students}</Heading>
           </Box>
           <chakra.p mt={2} color={useColorModeValue("gray.600", "gray.300")} minH={120}>
             {props.data.activity}
@@ -113,8 +115,8 @@ export const RubricPage = () => {
   useEffect(() => {
     setLoading(true)
     GetRubrics(code)
-      .then((val: RubricResponse) => {
-        console.log(val);
+      .then((val: any) => {
+        console.log(val)
         const userRubric = val.data;
         setLoading(false)
         setRubric(userRubric);

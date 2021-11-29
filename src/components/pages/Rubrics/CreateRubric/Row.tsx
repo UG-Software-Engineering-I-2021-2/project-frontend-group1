@@ -7,15 +7,15 @@ import {
 } from "@chakra-ui/react";
 
 
-export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, noaceptable, isEditable }) => {
+export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, noaceptable, isEditable, i }) => {
     return (
         <>
-            <Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"} gap={6} ml={20} mt={5}>
+            <Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"} gap={6} ml={20} p={5} backgroundColor={`${i %2 === 1 ? "#E4F3F6" : null}`}>
                 <Box>
                     {isEditable ? <Textarea
                         value={dimensiones.value}
                         onChange={e => onChange("dimensiones", { "value": e.target.value })}
-                        placeholder="Escriba el descriptor de la dimension..."
+                        placeholder="Escriba la dimension..."
                         size="sm"
                     /> : <Text> {dimensiones.value} </Text>}
                 </Box>
@@ -104,7 +104,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
 
                 </Box>
                 {
-                    isEditable ? <Button w="25%" onClick={onRemove}>X</Button> : null
+                    isEditable ? <Button colorScheme='red' w="25%" onClick={onRemove}>X</Button> : null
                 }
             </Grid>
         </>

@@ -6,11 +6,14 @@ export interface RubricResponse {
 
 export interface Rubric {
     code: string,
+    title: string,
     state: string,
     evaluation: string,
+    competenceCode: string,
     date: string,
     week: string,
     evidence: string,
+    criteriaCode: string,
     activity: string,
     canEdit: boolean,
     students: string
