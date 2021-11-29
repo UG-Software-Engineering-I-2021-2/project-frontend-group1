@@ -61,24 +61,24 @@ export const CreateNewRubric = () => {
 
   useEffect(() => {
 
-    // GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
-    //   if (val.data[0].content) {
-    //     let rubricContent = JSON.parse(val.data[0].content)
-    //     console.log(rubricContent)
-    //     setRows(rubricContent)
-    //   }
-    //   const rubricInfo = val.data[0]
-    //   setTitle(rubricInfo.title)
-    //   setActivity(rubricInfo.activity)
-    //   setIsEditable(rubricInfo.state === "Sin asignar")
-    //   setRubricInformation(rubricInfo)
-    // }).catch((err) => {
-    //   toast({
-    //     title: "We have a issue, try again please",
-    //     status: "error",
-    //     isClosable: true,
-    //   })
-    // })
+    GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
+      if (val.data[0].content) {
+        let rubricContent = JSON.parse(val.data[0].content)
+        console.log(rubricContent)
+        setRows(rubricContent)
+      }
+      const rubricInfo = val.data[0]
+      setTitle(rubricInfo.title)
+      setActivity(rubricInfo.activity)
+      setIsEditable(rubricInfo.state === "Sin asignar")
+      setRubricInformation(rubricInfo)
+    }).catch((err) => {
+      toast({
+        title: "We have a issue, try again please",
+        status: "error",
+        isClosable: true,
+      })
+    })
   }, [])
 
 
