@@ -16,7 +16,8 @@ export interface Rubric {
     criteriaCode: string,
     activity: string,
     canEdit: boolean,
-    students: string
+    students: string,
+    level: string
 }
 
 

@@ -104,13 +104,13 @@ export const CreateNewRubric = () => {
   const Save = () => {
     SaveRubric({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {
       toast({
-        title: "La rubrica se ha guardado correctamente",
+        title: "La rúbrica se ha guardado correctamente",
         status: "success",
         isClosable: true,
       })
     }).catch((err) => {
       toast({
-        title: "Tuvimos problemas tratando de guardar la rubrica, por favor intentelo en otro momento",
+        title: "Tuvimos problemas tratando de guardar la rúbrica, por favor inténtelo en otro momento",
         status: "error",
         isClosable: true,
       })
@@ -126,7 +126,7 @@ export const CreateNewRubric = () => {
       noaceptable += Number(val.noaceptable.points)
       if (excelente < bueno || bueno < endesarrollo || endesarrollo < noaceptable) {
         toast({
-          title: "No es posible esa combinacion de notas, por favor, reviselo antes de mandar.",
+          title: "No es posible esa combinación de notas, por favor, revíselo antes de mandar.",
           status: "error",
           isClosable: true
         })
@@ -144,14 +144,14 @@ export const CreateNewRubric = () => {
 
     RubricReviewPetition({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {
       toast({
-        title: "Se ha enviado correctamente un email al coordinador, por favor espere su revision.",
+        title: "Se ha enviado correctamente un email al coordinador, por favor espere su revisión.",
         status: "success",
         isClosable: true,
       })
       setIsEditable(false)
     }).catch((err) => {
       toast({
-        title: "Tuvimos problemas tratando de enviar el mensaje, por favor intentelo en otro momento",
+        title: "Tuvimos problemas tratando de enviar el mensaje, por favor inténtelo en otro momento",
         status: "error",
         isClosable: true,
       })
@@ -175,7 +175,7 @@ export const CreateNewRubric = () => {
       })
     }).catch((err) => {
       toast({
-        title: "Tuvimos problemas tratando de aprobar la rubrica, por favor, intentalo nuevamente en unos minutos.",
+        title: "Tuvimos problemas tratando de aprobar la rúbrica, por favor, inténtalo nuevamente en unos minutos.",
         status: "error",
         isClosable: true,
       })
@@ -192,13 +192,13 @@ export const CreateNewRubric = () => {
       comment: comment
     }).then((val) => {
       toast({
-        title: "Se ha enviado correctamente el comentario para la rubrica rechazada.",
+        title: "Se ha enviado correctamente el comentario para la rúbrica rechazada.",
         status: "success",
         isClosable: true,
       })
     }).catch((err) => {
       toast({
-        title: "Tuvimos problemas tratando de enviar el comentario de la rubrica, por favor, intentalo nuevamente en unos minutos.",
+        title: "Tuvimos problemas tratando de enviar el comentario de la rúbrica, por favor, inténtalo nuevamente en unos minutos.",
         status: "error",
         isClosable: true,
       })
@@ -211,13 +211,13 @@ export const CreateNewRubric = () => {
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Mandar a revision una rubrica</ModalHeader>
+          <ModalHeader>Mandar a revisión una rúbrica</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text fontWeight='bold' mb='1rem'>
-              Deja un comentario al profesor para indicarle porque su rubrica fue rechazada
+              Deja un comentario al profesor indicando el motivo del rechazo de su rúbrica
             </Text>
-            <Input  placeholder='Su rubrica fue rechazada por...' onChange={(e) => setComment(e.target.value)} />
+            <Input  placeholder='Su rúbrica fue rechazada por...' onChange={(e) => setComment(e.target.value)} />
           </ModalBody>
           <ModalFooter>
             <Button colorScheme='red'variant='ghost' mr={3} onClick={onClose}>
@@ -243,7 +243,7 @@ export const CreateNewRubric = () => {
           </Box>
 
           <Box style={{ display: "flex", justifyContent: "center" }}>
-            <Heading>{"Rubrica"}</Heading>
+            <Heading>{"Rúbrica"}</Heading>
           </Box>
         </SimpleGrid>
         <Box mt={10}>
@@ -310,7 +310,7 @@ export const CreateNewRubric = () => {
                 <Box></Box>
                 <Box></Box>
                 <Button onClick={Save} colorScheme='green' variant='outline'>Guardar</Button>
-                <Button onClick={ReviewPetition} rightIcon={<ArrowForwardIcon />} colorScheme='blue'>Enviar a revision</Button>
+                <Button onClick={ReviewPetition} rightIcon={<ArrowForwardIcon />} colorScheme='blue'>Enviar a revisión</Button>
               </Grid>) : localStorage.getItem("role") === "Calidad" ? (<Grid templateColumns="repeat(5, 2fr)" gap={6}>
                 <Box></Box>
                 <Box></Box>
@@ -330,7 +330,7 @@ export const CreateNewRubric = () => {
               </Box>
               <Box style={{ display: "flex", justifyContent: "flex-end" }}>
                 {isEditable ? (<ButtonGroup size='sm' isAttached variant='outline' onClick={handleOnAdd}>
-                  <Button mr='-px'>Agregar nueva dimension</Button>
+                  <Button mr='-px'>Agregar nueva dimensión</Button>
                   <IconButton aria-label='Add to friends' icon={<AddIcon />} />
                 </ButtonGroup>) : null}
               </Box>
