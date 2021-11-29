@@ -247,7 +247,7 @@ export const CreateNewRubric = () => {
           </Box>
         </SimpleGrid>
         <Box mt={10}>
-          <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+          <Grid templateColumns="repeat(6, 1fr)" gap={6}>
             <GridItem rowSpan={2} colStart={1} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "end" }}>
                 <b> Curso </b>
@@ -260,7 +260,12 @@ export const CreateNewRubric = () => {
             </GridItem>
             <GridItem rowSpan={2} colStart={5} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                <b>Ciclo:</b> {rubricInformation?.cycles}
+                <b>Ciclo</b>
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={2} colStart={6} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                {rubricInformation?.cycles}
               </Box>
             </GridItem>
             <GridItem rowSpan={3} colStart={1} colSpan={1}>
@@ -281,10 +286,14 @@ export const CreateNewRubric = () => {
             </GridItem>
             <GridItem rowSpan={2} colStart={5} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                <b> Semana: </b> {rubricInformation?.week}
+                <b> Semana </b> 
               </Box>
             </GridItem>
-
+            <GridItem rowSpan={2} colStart={6} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                {rubricInformation?.week}
+              </Box>
+            </GridItem>
             <GridItem rowSpan={4} colStart={1} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "end" }}>
                 <b> Competencia </b>
@@ -299,7 +308,12 @@ export const CreateNewRubric = () => {
 
             <GridItem rowSpan={2} colStart={5} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                <b> Fecha: </b> {rubricInformation?.date}
+                <b> Fecha </b>
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={2} colStart={6} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                {rubricInformation?.date}
               </Box>
             </GridItem>
           </Grid>
