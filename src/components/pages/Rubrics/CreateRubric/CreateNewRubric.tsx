@@ -145,7 +145,7 @@ export const CreateNewRubric = () => {
 
     RubricReviewPetition({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {
       toast({
-        title: "Se ha enviado correctamente un email al coordinador, por favor espere su revisión.",
+        title: "Se ha enviado correctamente un correo al área de calidad, por favor espere su revisión.",
         status: "success",
         isClosable: true,
       })
@@ -442,7 +442,7 @@ export const CreateNewRubric = () => {
                 <Box></Box>
                 <Box></Box>
                 <Button onClick={AcceptRubric} colorScheme='green' variant='outline'>Aprobar</Button>
-                <Button onClick={onOpen} colorScheme='red' >Declinar</Button>
+                <Button onClick={onOpen} colorScheme='red' >Rechazar</Button>
               </Grid>) : null
           }
           <Box minH={500}>
