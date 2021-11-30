@@ -41,6 +41,13 @@ export interface CreateRubricInterface {
     week: string
 }
 
+export interface ImportRubricContent {
+    content: string,
+    filter: string
+}
+export interface ImportRubric {
+    data: Array<ImportRubricContent>
+}
 
 export interface RubricContent {
     dimensiones: {

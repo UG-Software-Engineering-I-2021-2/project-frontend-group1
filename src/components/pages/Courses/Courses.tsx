@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, SimpleGrid, Box, Badge, Select } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { GetCourses } from "../../../api/ApiEndpoints";
-import { Courses, CoursesResponse } from "../../../interfaces/courses";
+import { Courses, CoursesResponse, CoursesDisplayed } from "../../../interfaces/courses";
 import { GetRubric } from "../../../interfaces/rubric";
 
 
@@ -10,11 +10,6 @@ const getColor = (): string => {
   return "hsl(" + 360 * Math.random() + ',' +
     (25 + 70 * Math.random()) + '%,' +
     (85 + 10 * Math.random()) + '%)'
-}
-
-interface CoursesDisplayed extends Courses {
-  color: string,
-  display?: boolean
 }
 
 
@@ -78,8 +73,7 @@ export const CoursesPage = () => {
       return
     }
 
-    GetCourses().then((res: any) => {
-      console.log(res)
+    GetCourses().then((res: CoursesResponse) => {
       const userCourses = res.data
       const coursesDisplayed = userCourses.map((val: CoursesDisplayed) => {
         return {

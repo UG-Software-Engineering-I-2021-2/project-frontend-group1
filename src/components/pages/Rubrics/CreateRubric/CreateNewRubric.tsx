@@ -4,11 +4,11 @@ import queryString from "query-string";
 import {
   Box, Heading, Button, SimpleGrid, Grid, GridItem, useDisclosure, Editable, EditablePreview,
   EditableInput, Textarea, Text, ButtonGroup, IconButton, Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input
+  ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, List, ListItem, Center, OrderedList, UnorderedList,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { GetRubricCreation, SaveRubric, RubricReviewPetition, RubricRevisionPetitionAccepted , RubricRevisionPetitionDecline } from "../../../../api/ApiEndpoints";
-import { CreateRubricInterface, CreateRubricResponse } from "../../../../interfaces/rubric";
+import { GetRubricCreation, SaveRubric, RubricReviewPetition, RubricRevisionPetitionAccepted, RubricRevisionPetitionDecline, GetRubricsForImport } from "../../../../api/ApiEndpoints";
+import { CreateRubricInterface, CreateRubricResponse, ImportRubric, ImportRubricContent } from "../../../../interfaces/rubric";
 import { useToast } from "@chakra-ui/react"
 
 import { _ } from "gridjs-react";
@@ -18,7 +18,6 @@ import { Row } from "./Row"
 import { HeaderRubric } from "./HeaderRubric"
 
 import { AddIcon, ArrowForwardIcon } from "@chakra-ui/icons"
-import { setCommentRange } from "typescript";
 
 const defaultState = {
   dimensiones: {
@@ -55,7 +54,10 @@ export const CreateNewRubric = () => {
   const [activity, setActivity] = useState("")
   const [rows, setRows] = useState([defaultState]);
   const [comment, setComment] = useState<string>("")
+  const [importRubric, setImportRubric] = useState<Array<ImportRubricContent>>([])
+  const [clickImportRubric, setClickImportRubric] = useState<{ filter: string, content: Array<any> } | undefined>(undefined)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpenImport, onOpen: onOpenImport, onClose: onCloseImport } = useDisclosure()
 
   const [isEditable, setIsEditable] = useState<boolean>(localStorage.getItem("role") === "Docente")
 
@@ -64,7 +66,6 @@ export const CreateNewRubric = () => {
     GetRubricCreation(courseCode, code).then((val: CreateRubricResponse) => {
       if (val.data[0].content) {
         let rubricContent = JSON.parse(val.data[0].content)
-        console.log(rubricContent)
         setRows(rubricContent)
       }
       const rubricInfo = val.data[0]
@@ -205,6 +206,24 @@ export const CreateNewRubric = () => {
     })
   }
 
+  const ClickImportRubric = (val: ImportRubricContent) => {
+    const content = JSON.parse(val.content)
+    console.log(content)
+    setClickImportRubric({
+      content: content,
+      filter: val.filter
+    })
+  }
+
+  const openRubricImport = () => {
+    GetRubricsForImport(courseCode, code).then((val: ImportRubric) => {
+      setImportRubric(val.data)
+      onOpenImport()
+    }).catch((err) => {
+      console.log(err)
+      return
+    })
+  }
   return (
     <>
       <Header></Header>
@@ -217,14 +236,74 @@ export const CreateNewRubric = () => {
             <Text fontWeight='bold' mb='1rem'>
               Deja un comentario al profesor indicando el motivo del rechazo de su rúbrica
             </Text>
-            <Input  placeholder='Su rúbrica fue rechazada por...' onChange={(e) => setComment(e.target.value)} />
+            <Input placeholder='Su rúbrica fue rechazada por...' onChange={(e) => setComment(e.target.value)} />
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='red'variant='ghost' mr={3} onClick={onClose}>
+            <Button colorScheme='red' variant='ghost' mr={3} onClick={onClose}>
               Cerrar
             </Button>
             <Button colorScheme='blue' onClick={DeclineRubric}>Enviar</Button>
           </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isOpenImport} onClose={onCloseImport} size="6xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Importar una rúbrica</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Grid
+              minHeight="700px"
+              templateRows='repeat(1, 1fr)'
+              templateColumns='repeat(6, 1fr)'
+              gap={4}
+            >
+              <GridItem colSpan={2}>
+                <Box style={{ border: "2px solid black" }} h="100%" borderRadius={10} overflow="scroll">
+                  <List spacing={3}>
+                    {
+                      importRubric.map((val: ImportRubricContent) => {
+                        return (
+                          <ListItem p={2}>
+                            <Box p={2} _hover={{
+                              backgroundColor: "#E4F3F5",
+                              cursor: "pointer",
+                              borderRadius: "5px"
+                            }} onClick={() => ClickImportRubric(val)}  >  {val.filter} </Box>
+                          </ListItem>
+                        )
+                      })
+                    }
+                  </List>
+                </Box>
+              </GridItem>
+              <GridItem colSpan={4}>
+                <Center>
+                  <Heading size="lg"> {clickImportRubric?.filter}  </Heading>
+                </Center>
+                {clickImportRubric?.filter ? <HeaderRubric hasMargins={false} isEditable={false}></HeaderRubric> : null}
+                {
+                  clickImportRubric?.content?.map((row, index) => {
+                    return <Row
+                      {...row}
+                      i={index}
+                      onChange={(name, value) => console.log(index, name, value)}
+                      onRemove={() => { }}
+                      key={index}
+                      isEditable={false}
+                      hasMargins={false}
+                    />
+                  })
+                }
+                {clickImportRubric?.filter ?
+                  <Box style={{ display: "flex", justifyContent: "center" }} mt={10}>
+                    <Button variant="solid" colorScheme="blue" size="lg" onClick={() => { setRows(clickImportRubric?.content); onCloseImport() }}> Select </Button>
+                  </Box> : null}
+              </GridItem>
+            </Grid>
+
+          </ModalBody>
         </ModalContent>
       </Modal>
       <Box p={7}>
@@ -235,10 +314,10 @@ export const CreateNewRubric = () => {
               colorScheme="teal"
               variant="outline"
               onClick={() => {
-                history.push("/main");
+                history.push(`/rubric?name=${course}&cod=${courseCode}`);
               }}
             >
-              Regresar a mis cursos
+              Regresar a mis rubricas
             </Button>
           </Box>
 
@@ -286,7 +365,7 @@ export const CreateNewRubric = () => {
             </GridItem>
             <GridItem rowSpan={2} colStart={5} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                <b> Semana </b> 
+                <b> Semana </b>
               </Box>
             </GridItem>
             <GridItem rowSpan={2} colStart={6} colSpan={1}>
@@ -320,7 +399,7 @@ export const CreateNewRubric = () => {
           {
             isEditable ?
               (<Grid templateColumns="repeat(5, 2fr)" gap={6}>
-                <Box></Box>
+                <Button onClick={openRubricImport} colorScheme='blue' variant='ghost'>Importar una rúbrica</Button>
                 <Box></Box>
                 <Box></Box>
                 <Button onClick={Save} colorScheme='green' variant='outline'>Guardar</Button>
@@ -329,7 +408,7 @@ export const CreateNewRubric = () => {
                 <Box></Box>
                 <Box></Box>
                 <Box></Box>
-                <Button onClick={AcceptRubric} colorScheme='green'  variant='outline'>Aprobar</Button>
+                <Button onClick={AcceptRubric} colorScheme='green' variant='outline'>Aprobar</Button>
                 <Button onClick={onOpen} colorScheme='red' >Declinar</Button>
               </Grid>) : null
           }
@@ -349,11 +428,12 @@ export const CreateNewRubric = () => {
                 </ButtonGroup>) : null}
               </Box>
             </Grid>
-            <HeaderRubric isEditable={isEditable} />
+            <HeaderRubric isEditable={isEditable} hasMargins={true} />
             {rows.map((row, index) => (
               <Row
                 {...row}
                 i={index}
+                hasMargins={true}
                 onChange={(name, value) => handleOnChange(index, name, value)}
                 onRemove={() => handleOnRemove(index)}
                 key={index}

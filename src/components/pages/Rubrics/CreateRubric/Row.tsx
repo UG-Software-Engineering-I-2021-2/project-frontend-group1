@@ -7,17 +7,17 @@ import {
 } from "@chakra-ui/react";
 
 
-export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, noaceptable, isEditable, i }) => {
+export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesarrollo, noaceptable, isEditable, i, hasMargins }) => {
     return (
         <>
-            <Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"} gap={6} ml={20} p={5} backgroundColor={`${i %2 === 1 ? "#E4F3F6" : null}`}>
+            <Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"} gap={6} ml={hasMargins ? 20 : 0} p={5} backgroundColor={`${i %2 === 1 ? "#E4F3F6" : null}`}>
                 <Box>
                     {isEditable ? <Textarea
                         value={dimensiones.value}
                         onChange={e => onChange("dimensiones", { "value": e.target.value })}
                         placeholder="Escriba la dimension..."
                         size="sm"
-                    /> : <Text> {dimensiones.value} </Text>}
+                    /> : <Box w={hasMargins ? "100%" : 120}> <Text noOfLines={[1, 2, 3]}> {dimensiones.value} </Text> </Box>}
                 </Box>
 
                 <Box>
@@ -26,7 +26,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                         onChange={e => onChange("excelente", { "value": e.target.value, "points": 1.0 })}
                         placeholder="Escriba el descriptor excelente..."
                         size="sm"
-                    /> : <Text> {excelente.value} </Text>}
+                    /> : <Box w={hasMargins ? "100%" : 120}> <Text> {excelente.value} </Text> </Box>}
                     {isEditable ? <NumberInput size="xs" value={excelente.points}  max={20}  step={0.5} min={0} onChange={value => onChange("excelente", { "points": value, "value": excelente.value })}>
                         <NumberInputField />
                         <NumberInputStepper>
@@ -50,7 +50,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                                 <NumberDecrementStepper />
                             </NumberInputStepper>
                         </NumberInput></>) : (<>
-                            <Text> {bueno.value} </Text>
+                            <Box w={hasMargins ? "100%" : 120}>   <Text noOfLines={[1, 2, 3]}> {bueno.value} </Text> </Box>
                             <Text> Total Points: {bueno.points} </Text>
                         </>)}
                 </Box>
@@ -72,7 +72,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                                 </NumberInputStepper>
                             </NumberInput></>) :
                         (<>
-                            <Text> {endesarrollo.value} </Text>
+                           <Box w={hasMargins ? "100%" : 120}> <Text> {endesarrollo.value} </Text> </Box>
                             <Text> Total Points: {endesarrollo.points} </Text>
                         </>)}
 
@@ -96,7 +96,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                                 </NumberInputStepper>
                             </NumberInput></>) :
                         (<>
-                            <Text> {noaceptable.value} </Text>
+                           <Box w={hasMargins ? "100%" : 120}> <Text> {noaceptable.value} </Text> </Box>
                             <Text> Total Points: {noaceptable.points} </Text>
                         </>)}
 

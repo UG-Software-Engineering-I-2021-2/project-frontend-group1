@@ -1,6 +1,13 @@
 export interface CoursesResponse {
-    data: Array<Courses>
+    data: Array<CoursesDisplayed>
 }
+
+
+
+export interface CoursesDisplayed extends Courses {
+    color: string,
+    display?: boolean
+  }
 
 
 export interface Courses {

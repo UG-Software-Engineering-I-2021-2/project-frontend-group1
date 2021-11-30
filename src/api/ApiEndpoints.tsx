@@ -74,3 +74,8 @@ export const RubricRevisionPetitionDecline = (data: {
 }) => {
     return axiosEnv.post("/rubric_revision", { ...data, accepted: false })
 }
+
+
+export const GetRubricsForImport = (courseCode: string, rubricCode: string) => {
+    return axiosEnv.get(`/rubric_import/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}`)
+}
