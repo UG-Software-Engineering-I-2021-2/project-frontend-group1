@@ -298,7 +298,7 @@ export const CreateNewRubric = () => {
                 }
                 {clickImportRubric?.filter ?
                   <Box style={{ display: "flex", justifyContent: "center" }} mt={10}>
-                    <Button variant="solid" colorScheme="blue" size="lg" onClick={() => { setRows(clickImportRubric?.content); onCloseImport() }}> Select </Button>
+                    <Button variant="solid" colorScheme="blue" size="lg" onClick={() => { setRows(clickImportRubric?.content); onCloseImport() }}> Seleccionar esta rúbrica </Button>
                   </Box> : null}
               </GridItem>
             </Grid>
