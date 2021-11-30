@@ -23,7 +23,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                 <Box>
                     {isEditable ? <Textarea
                         value={excelente.value}
-                        onChange={e => onChange("excelente", { "value": e.target.value, "points": 1.0 })}
+                        onChange={e => onChange("excelente", { "value": e.target.value, "points": excelente.points })}
                         placeholder="Escriba el descriptor Excelente..."
                         size="sm"
                     /> : <Box w={hasMargins ? "100%" : 120}> <Text> {excelente.value} </Text> </Box>}
@@ -39,7 +39,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                 <Box>
                     {isEditable ? (<><Textarea
                         value={bueno.value}
-                        onChange={e => onChange("bueno", { "value": e.target.value, "points": 1.0 })}
+                        onChange={e => onChange("bueno", { "value": e.target.value, "points": bueno.points })}
                         placeholder="Escriba el descriptor Bueno..."
                         size="sm"
                     />
@@ -60,7 +60,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                     {isEditable ? (
                         <><Textarea
                             value={endesarrollo.value}
-                            onChange={e => onChange("endesarrollo", { "value": e.target.value, "points": 1.0 })}
+                            onChange={e => onChange("endesarrollo", { "value": e.target.value, "points": endesarrollo.points })}
                             placeholder="Escriba el descriptor En desarrollo..."
                             size="sm"
                         />
@@ -84,7 +84,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                     {isEditable ? (
                         <><Textarea
                             value={noaceptable.value}
-                            onChange={e => onChange("noaceptable", { "value": e.target.value, "points": 1.0 })}
+                            onChange={e => onChange("noaceptable", { "value": e.target.value, "points": noaceptable.points })}
                             placeholder="Escriba el descriptor No aceptable..."
                             size="sm"
                         />
