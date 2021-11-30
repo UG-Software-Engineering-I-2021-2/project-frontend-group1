@@ -15,7 +15,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                     {isEditable ? <Textarea
                         value={dimensiones.value}
                         onChange={e => onChange("dimensiones", { "value": e.target.value })}
-                        placeholder="Escriba la dimension..."
+                        placeholder="Escriba la dimensión..."
                         size="sm"
                     /> : <Box w={hasMargins ? "100%" : 120}> <Text noOfLines={[1, 2, 3]}> {dimensiones.value} </Text> </Box>}
                 </Box>
@@ -24,7 +24,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                     {isEditable ? <Textarea
                         value={excelente.value}
                         onChange={e => onChange("excelente", { "value": e.target.value, "points": 1.0 })}
-                        placeholder="Escriba el descriptor excelente..."
+                        placeholder="Escriba el descriptor Excelente..."
                         size="sm"
                     /> : <Box w={hasMargins ? "100%" : 120}> <Text> {excelente.value} </Text> </Box>}
                     {isEditable ? <NumberInput size="xs" value={excelente.points}  max={20}  step={0.5} min={0} onChange={value => onChange("excelente", { "points": value, "value": excelente.value })}>
@@ -40,7 +40,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                     {isEditable ? (<><Textarea
                         value={bueno.value}
                         onChange={e => onChange("bueno", { "value": e.target.value, "points": 1.0 })}
-                        placeholder="Escriba el descriptor bueno..."
+                        placeholder="Escriba el descriptor Bueno..."
                         size="sm"
                     />
                         <NumberInput size="xs" value={bueno.points}  max={20} step={0.5}  min={0}  onChange={value => onChange("bueno", { "points": value, "value": bueno.value })}>
@@ -61,7 +61,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                         <><Textarea
                             value={endesarrollo.value}
                             onChange={e => onChange("endesarrollo", { "value": e.target.value, "points": 1.0 })}
-                            placeholder="Escriba el descriptor en desarrollo..."
+                            placeholder="Escriba el descriptor En desarrollo..."
                             size="sm"
                         />
                             <NumberInput size="xs" value={endesarrollo.points}  max={20} step={0.5}  min={0}  onChange={value => onChange("endesarrollo", { "points": value, "value": endesarrollo.value })}>
@@ -85,7 +85,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                         <><Textarea
                             value={noaceptable.value}
                             onChange={e => onChange("noaceptable", { "value": e.target.value, "points": 1.0 })}
-                            placeholder="Escriba el descriptior no aceptable..."
+                            placeholder="Escriba el descriptor No aceptable..."
                             size="sm"
                         />
                             <NumberInput size="xs" value={noaceptable.points}  max={20} step={0.5}  min={0}  onChange={value => onChange("noaceptable", { "points": value, "value": noaceptable.value })}>

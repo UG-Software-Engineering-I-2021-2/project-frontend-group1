@@ -381,7 +381,7 @@ export const CreateNewRubric = () => {
 
             <GridItem rowSpan={2} colStart={2} colSpan={3} >
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                {rubricInformation?.competence}
+              {rubricInformation?.codCompetence} {rubricInformation?.competence}
               </Box>
             </GridItem>
 
@@ -393,6 +393,39 @@ export const CreateNewRubric = () => {
             <GridItem rowSpan={2} colStart={6} colSpan={1}>
               <Box style={{ display: "flex", justifyContent: "center" }}>
                 {rubricInformation?.date}
+              </Box>
+            </GridItem>
+            
+            <GridItem rowSpan={6} colStart={1} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "end" }}>
+                <b> Criterio de <br/> desempeño </b>
+              </Box>
+            </GridItem>
+
+            <GridItem rowSpan={2} colStart={2} colSpan={3} >
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                {rubricInformation?.criteria}
+              </Box>
+            </GridItem>
+
+            <GridItem rowSpan={2} colStart={5} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                <b> Nivel </b>
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={2} colStart={6} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                {rubricInformation?.criteriaLevel}
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={2} colStart={5} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                <b> Evaluación </b>
+              </Box>
+            </GridItem>
+            <GridItem rowSpan={2} colStart={6} colSpan={1}>
+              <Box style={{ display: "flex", justifyContent: "center" }}>
+                {rubricInformation?.evaluation}
               </Box>
             </GridItem>
           </Grid>

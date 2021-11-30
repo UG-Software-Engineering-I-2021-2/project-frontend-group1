@@ -35,10 +35,10 @@ export interface CreateRubricInterface {
     cycles: string,
     date: string,
     content: string,
-    dimensions: number,
     evaluation: string,
     evidence: string,
-    week: string
+    week: string,
+    codCompetence: string    
 }
 
 export interface ImportRubricContent {
