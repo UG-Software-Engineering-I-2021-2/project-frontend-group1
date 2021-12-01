@@ -4,7 +4,7 @@ import queryString from "query-string";
 import {
   Box, Heading, Button, SimpleGrid, Grid, GridItem, useDisclosure, Editable, EditablePreview,
   EditableInput, Textarea, Text, ButtonGroup, IconButton, Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, List, ListItem, Center, OrderedList, UnorderedList,
+  ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, List, ListItem, Center
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { GetRubricCreation, SaveRubric, RubricReviewPetition, RubricRevisionPetitionAccepted, RubricRevisionPetitionDecline, GetRubricsForImport } from "../../../../api/ApiEndpoints";
@@ -56,6 +56,7 @@ export const CreateNewRubric = () => {
   const [comment, setComment] = useState<string>("")
   const [importRubric, setImportRubric] = useState<Array<ImportRubricContent>>([])
   const [clickImportRubric, setClickImportRubric] = useState<{ filter: string, content: Array<any> } | undefined>(undefined)
+  const [inRevision, setIsInRevision] = useState<boolean>(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { isOpen: isOpenImport, onOpen: onOpenImport, onClose: onCloseImport } = useDisclosure()
 
@@ -168,12 +169,12 @@ export const CreateNewRubric = () => {
       courseName: course,
       title: title,
     }).then((val) => {
-      console.log("Rubric accepted")
       toast({
         title: "Se ha aprobado correctamente la rúbrica.",
         status: "success",
         isClosable: true,
       })
+      setIsInRevision(true)
     }).catch((err) => {
       toast({
         title: "Tuvimos problemas tratando de aprobar la rúbrica, por favor, inténtalo nuevamente en unos minutos.",
@@ -197,6 +198,8 @@ export const CreateNewRubric = () => {
         status: "success",
         isClosable: true,
       })
+      onClose()
+      setIsInRevision(true)
     }).catch((err) => {
       toast({
         title: "Tuvimos problemas tratando de enviar el comentario de la rúbrica, por favor, inténtalo nuevamente en unos minutos.",
@@ -437,7 +440,7 @@ export const CreateNewRubric = () => {
                 <Box></Box>
                 <Button onClick={Save} colorScheme='green' variant='outline'>Guardar</Button>
                 <Button onClick={ReviewPetition} rightIcon={<ArrowForwardIcon />} colorScheme='blue'>Enviar a revisión</Button>
-              </Grid>) : localStorage.getItem("role") === "Calidad" ? (<Grid templateColumns="repeat(5, 2fr)" gap={6}>
+              </Grid>) : localStorage.getItem("role") === "Calidad" && !inRevision ? (<Grid templateColumns="repeat(5, 2fr)" gap={6}>
                 <Box></Box>
                 <Box></Box>
                 <Box></Box>
