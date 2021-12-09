@@ -10,6 +10,7 @@ export interface Rubric {
     state: string,
     evaluation: string,
     competenceCode: string,
+    canGrade: boolean,
     date: string,
     week: string,
     evidence: string,
@@ -32,7 +33,8 @@ export interface CreateRubricInterface {
     state: string,
     criteria: string,
     criteriaLevel: number,
-    cycles: string,
+    sections: Array<string>,
+    cycles: string | Array<string>,
     date: string,
     content: string,
     evaluation: string,
@@ -44,6 +46,28 @@ export interface CreateRubricInterface {
 export interface ImportRubricContent {
     content: string,
     filter: string
+}
+
+export interface CompetenceRubric {
+    competenceLeft: number,
+    competenceRight: number
+}
+
+export interface StudentGrade {
+    bueno: number,
+    excelente: number,
+    endesarrollo: number,
+    total: number,
+    noaceptable: number,
+    content: string,
+}
+
+
+export interface GetStudentGrades {
+    studentGrade: StudentGrade | string,
+    competenceGrade: string | CompetenceRubric,
+    finished: boolean,
+    studentCode: string
 }
 export interface ImportRubric {
     data: Array<ImportRubricContent>

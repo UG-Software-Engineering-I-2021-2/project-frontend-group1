@@ -2,6 +2,7 @@ import axios from "axios";
 import { CoursesResponse } from "../interfaces/courses";
 import { LoginResponse } from "../interfaces/login";
 import { RubricResponse } from "../interfaces/rubric";
+import { StudentsGradeResponse } from "../interfaces/students";
 
 const BASE_URL = "https://api.cs.mrg.com.pe/api-u-group01/"
 
@@ -75,7 +76,34 @@ export const RubricRevisionPetitionDecline = (data: {
     return axiosEnv.post("/rubric_revision", { ...data, accepted: false })
 }
 
-
 export const GetRubricsForImport = (courseCode: string, rubricCode: string) => {
     return axiosEnv.get(`/rubric_import/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}`)
+}
+
+export const GetRubricInfoForGradeStudent = (courseCode: string,rubricCode: string) => {
+    const role = localStorage.getItem("role")
+    return axiosEnv.get(`/rubric_sections/?semester=2021 - 2&courseCode=${courseCode}&role=${role}&rubricCode=${rubricCode}`)
+}
+
+export const GetStudentsBySection = (courseCode: string, rubricCode: string, section: string | undefined) => {
+    return axiosEnv.get(`/students_by_sections/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}&section=${section}`)
+}
+
+export const GetStudentsGradeBySection = (courseCode: string, rubricCode: string, studentCode: string): Promise<StudentsGradeResponse> => {
+    return axiosEnv.get(`/rubric_grade/?semester=2021 - 2&courseCode=${courseCode}&rubricCode=${rubricCode}&studentCode=${studentCode}`)
+}
+
+export const RubricGradeSave = (content: any, rubricCode: string, courseCode: string, studentCode: string, studentGrade: string,competenceGrade: string,finished:boolean) => {
+    return axiosEnv.post("/rubric_grade", {
+        content: content,
+        onlySave: true,
+        rubricCode: rubricCode,
+        semester: "2021 - 2",
+        courseCode: courseCode,
+        studentCode: studentCode,
+        studentGrade: studentGrade,
+        competenceGrade: competenceGrade,
+        finished: finished
+
+    })
 }

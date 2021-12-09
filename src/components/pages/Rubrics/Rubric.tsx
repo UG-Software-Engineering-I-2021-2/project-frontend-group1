@@ -16,7 +16,6 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { GetRubrics } from "../../../api/ApiEndpoints";
 import {
   Rubric,
-  RubricResponse,
   GetColorByRubricState,
 } from "../../../interfaces/rubric";
 
@@ -24,8 +23,14 @@ const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) 
   const history = useHistory();
 
   const clickCreateRubric = () => {
+    if(props.data.canGrade) {
+      history.push(`/grade-rubric?code=${props.data.code}&course=${props.course}&courseCode=${props.courseCode}`);
+      return
+    }
+
     if (props.data.canEdit) {
       history.push(`/edit-rubric?code=${props.data.code}&course=${props.course}&courseCode=${props.courseCode}`);
+      return
     }
   }
 
@@ -150,7 +155,7 @@ export const RubricPage = () => {
           </Box>
         </SimpleGrid>
         <Box mt={10}>
-          <SimpleGrid columns={[1, 2]} spacing={10} overflow="scroll" maxH={600}>
+          <SimpleGrid columns={[1, 2]} spacing={10}>
             {
               rubrik && rubrik.length > 0 ? (
                 //@ts-ignore

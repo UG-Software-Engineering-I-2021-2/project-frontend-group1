@@ -1,13 +1,12 @@
 import React from "react"
 
 import {
-    Box, Heading, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper,
-    NumberDecrementStepper, Button, Textarea, SimpleGrid, Grid, GridItem, Center, Editable, EditablePreview,
-    EditableInput
+    Box, Heading, Grid, 
 } from "@chakra-ui/react";
 
-export const HeaderRubric = ({isEditable, hasMargins}) => {
-    return (<Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"}   ml={ hasMargins ? 20 : 0} p={hasMargins ? 5 : 4} backgroundColor="#1BA7CE" color="white">
+export const HeaderRubric = ({isEditable, hasMargins, isFinished}) => {
+    console.log(isFinished)
+    return (<Grid templateColumns={isEditable ? "repeat(6, 1fr)" : "repeat(5, 1fr)"}   ml={ hasMargins ? 20 : 0} p={hasMargins ? 5 : 4} backgroundColor={isFinished ? "#00C24E" : "#1BA7CE"} color="white">
         <Box style={{ display: "flex", justifyContent: "center", alignItems:"center" }}>
             <Heading as="p" size="md">
                 Dimensiones

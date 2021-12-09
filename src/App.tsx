@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Login } from "./components/pages/Login/Login";
 import { LogOut } from "./components/pages/LogOut/LogOut";
 import { MainPage } from "./components/pages/Main/MainPage";
-import {NotFoundUser} from "./components/pages/NotFound/NotFound"
+import { NotFoundUser } from "./components/pages/NotFound/NotFound"
 import {
   BrowserRouter,
   Route,
@@ -16,6 +16,7 @@ import { extendTheme } from "@chakra-ui/react";
 import IdleTimer from 'react-idle-timer'
 import { RubricPage } from "./components/pages/Rubrics/Rubric";
 import { CreateNewRubric } from "./components/pages/Rubrics/CreateRubric/CreateNewRubric";
+import { GradeRubric } from "./components/pages/Rubrics/CalificateRubric/CalificateRubric";
 
 
 
@@ -43,9 +44,10 @@ const App = () => {
       />
       <BrowserRouter>
         <Switch>
-          <Route exact path="/edit-rubric" render={(props) => <CreateNewRubric/>} />
-          <Route exact path="/rubric" render={(props) => <RubricPage/>} />
-          <Route exact path="/not-found" render={(props) => <NotFoundUser/>} />
+          <Route exact path="/grade-rubric" render={(props) => <GradeRubric />} />
+          <Route exact path="/edit-rubric" render={(props) => <CreateNewRubric />} />
+          <Route exact path="/rubric" render={(props) => <RubricPage />} />
+          <Route exact path="/not-found" render={(props) => <NotFoundUser />} />
           <Route exact path="/main" render={(props) => <MainPage></MainPage>} />
           <Route exact path="/login" render={(props) => <Login></Login>} />
           <Redirect from="/" to="/login" />
