@@ -78,6 +78,7 @@ export const GradeRubric = () => {
 
     useEffect(() => {
         const role = localStorage.getItem("role")
+
         if(role) {
             if(role === "Calidad"){
                 setIsEditable(false)
@@ -96,6 +97,9 @@ export const GradeRubric = () => {
             setTitle(rubricInfo.title)
             setActivity(rubricInfo.activity)
             setRubricInformation(rubricInfo)
+            setIsEditable(!(rubricInfo.state === "Cumplidos"))
+            console.log(!(rubricInfo.state === "Cumplidos"))
+            console.log(rubricInfo)
         }).catch((err) => {
             toast({
                 title: "We have a issue, try again please",
