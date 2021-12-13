@@ -205,6 +205,7 @@ export const GradeRubric = () => {
                 isClosable: true,
             })
         })
+        onClose()
     }
 
     const GradeRubricByStudent = () => {
