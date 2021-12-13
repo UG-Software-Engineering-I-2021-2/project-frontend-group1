@@ -149,7 +149,7 @@ export const GradeRubric = () => {
         setExcelente(excelente)
         setEndesarrollo(endesarrollo)
         setNoaceptable(noaceptable)
-        setFinalGrade(bueno + excelente + endesarrollo + noaceptable)
+        setFinalGrade(finalGrade)
     }, [rows])
 
     useEffect(() => {
