@@ -122,18 +122,22 @@ export const GradeRubric = () => {
     }, [sections])
 
     useEffect(() => {
-        let bueno = 0, excelente = 0, endesarrollo = 0, noaceptable = 0
+        let bueno = 0, excelente = 0, endesarrollo = 0, noaceptable = 0, finalGrade = 0
         rows.forEach((val) => {
             if (val.bueno.selected) {
                 bueno += 1
+                finalGrade += Number(val.bueno.points)
             }
             if (val.excelente.selected) {
                 excelente += 1
+                finalGrade += Number(val.excelente.points)
             }
             if (val.endesarrollo.selected) {
+                finalGrade += Number(val.endesarrollo.points)
                 endesarrollo += 1
             }
             if (val.noaceptable.selected) {
+                finalGrade += Number(val.noaceptable.points)
                 noaceptable += 1
             }
         })
