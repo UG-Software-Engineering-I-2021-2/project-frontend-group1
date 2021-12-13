@@ -191,23 +191,6 @@ export const GradeRubric = () => {
         setRows(copyRows);
     }
 
-    const FinishGradeByStudent = () => {
-        RubricGradeSaveFinish(rubricCode).then((val) => {
-            toast({
-                title:"La sección se ha guardado correctamente",
-                status:"success",
-                isClosable: true,
-            })
-        }).catch((err) => {
-            toast({
-                title: "We have a issue, try again please",
-                status: "error",
-                isClosable: true,
-            })
-        })
-        setIsEditable(false)
-        onClose()
-    }
 
     const GradeRubricByStudent = () => {
         if (!studentSelected || studentSelected.toString().length === 0) {
@@ -260,6 +243,24 @@ export const GradeRubric = () => {
     }
 
 
+    const FinishGradeByStudent = () => {
+        RubricGradeSaveFinish(rubricCode).then((val) => {
+            toast({
+                title:"La sección se ha guardado correctamente",
+                status:"success",
+                isClosable: true,
+            })
+        }).catch((err) => {
+            toast({
+                title: "We have a issue, try again please",
+                status: "error",
+                isClosable: true,
+            })
+        })
+        setIsEditable(false)
+        onClose()
+    }
+    
     return (
         <>
 
