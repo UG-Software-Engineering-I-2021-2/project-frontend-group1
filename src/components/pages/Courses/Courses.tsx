@@ -140,7 +140,7 @@ export const CoursesPage = () => {
       <SimpleGrid columns={3} padding={20} >
 
         <Box w={80} >
-          <Select placeholder="Filter by career" value={filterCareers} onChange={(e) => FilterCareers(e.target.value)}>
+          <Select placeholder="Filtrar por carrera" value={filterCareers} onChange={(e) => FilterCareers(e.target.value)}>
             <option value='Ingeniería Electrónica'>Ingeniería Electrónica</option>
             <option value='Ingeniería Mecánica'>Ingeniería Mecánica</option>
             <option value='Ciencia de la Computación'>Ciencia de la Computación</option>
@@ -170,7 +170,7 @@ export const CoursesPage = () => {
         </Box>
         <Box w={80} style={{display:"flex", justifySelf:"flex-end"}}>
 
-          <Select placeholder="Filter by status" value={filterCareersByStatus} onChange={(e) => filterStatusHandler(e.target.value)}>
+          <Select placeholder="Filtrar por estado" value={filterCareersByStatus} onChange={(e) => filterStatusHandler(e.target.value)}>
             <option value="Aprobacion pendiente">Aprobacion pendiente</option>
             <option value="Cumplidos">Cumplidos</option>
             <option value="Disponible para calificar">Disponible para calificar</option>

@@ -121,20 +121,27 @@ export const CreateNewRubric = () => {
 
   const ReviewPetition = () => {
     let excelente = 0, bueno = 0, endesarrollo = 0, noaceptable = 0
+    let isOk = true
     rows.forEach((val) => {
       excelente += Number(val.excelente.points)
       bueno += Number(val.bueno.points)
       endesarrollo += Number(val.endesarrollo.points)
       noaceptable += Number(val.noaceptable.points)
       if (excelente < bueno || bueno < endesarrollo || endesarrollo < noaceptable) {
-        toast({
-          title: "No es posible esa combinación de notas, por favor, revíselo antes de mandar.",
-          status: "error",
-          isClosable: true
-        })
+        isOk = false
         return
       }
     })
+    
+    if(!isOk){
+      toast({
+        title: "No es posible esa combinación de notas, por favor, revíselo antes de mandar.",
+        status: "error",
+        isClosable: true
+      })
+      return
+    }
+
     if (excelente !== 20) {
       toast({
         title: "El valor de excelente no debe exceder los 20 puntos y no puede ser menor a los 20 puntos",

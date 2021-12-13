@@ -34,7 +34,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
-                    </NumberInput> : <Text > <b> Total Points: {excelente.points} </b> </Text>}
+                    </NumberInput> : <Text > <b> Puntos totales: {excelente.points} </b> </Text>}
                 </Box>
 
                 <Box>
@@ -53,7 +53,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                             </NumberInputStepper>
                         </NumberInput></>) : (<>
                             <Box w={hasMargins ? "100%" : 120}>   <Text noOfLines={[1, 2, 3]}> {bueno.value} </Text> </Box>
-                            <Text> <b> Total Points: {bueno.points} </b> </Text>
+                            <Text> <b> Puntos totales: {bueno.points} </b> </Text>
                         </>)}
                 </Box>
 
@@ -76,7 +76,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                             </NumberInput></>) :
                         (<>
                             <Box w={hasMargins ? "100%" : 120}> <Text> {endesarrollo.value} </Text> </Box>
-                            <Text> <b> Total Points: {endesarrollo.points} </b> </Text>
+                            <Text> <b> Puntos totales: {endesarrollo.points} </b> </Text>
                         </>)}
 
 
@@ -101,7 +101,7 @@ export const Row = ({ onChange, onRemove, dimensiones, excelente, bueno, endesar
                             </NumberInput></>) :
                         (<>
                             <Box w={hasMargins ? "100%" : 120}> <Text> {noaceptable.value} </Text> </Box>
-                            <Text> <b> Total Points: {noaceptable.points}  </b> </Text>
+                            <Text> <b> Puntos totales: {noaceptable.points}  </b> </Text>
                         </>)}
 
 
