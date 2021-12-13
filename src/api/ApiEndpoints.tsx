@@ -107,3 +107,11 @@ export const RubricGradeSave = (content: any, rubricCode: string, courseCode: st
 
     })
 }
+
+
+export const RubricGradeSaveFinish = (rubricCode: string): Promise<StudentsGradeResponse> => {
+    return axiosEnv.post(`/rubric_finish`, {
+        "semester": "2021 - 2",
+        rubricCode: rubricCode
+    })
+}

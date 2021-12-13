@@ -5,10 +5,11 @@ import {
 } from "@chakra-ui/react";
 
 
-export const Row = ({ onChange, dimensiones, excelente, bueno, endesarrollo, noaceptable, i, hasMargins }) => {
+export const Row = ({ onChange, dimensiones, excelente, bueno, endesarrollo, noaceptable, i, hasMargins, isEditable } ) => {
 
 
     const clickDescriptor = (name: string) => {
+        if(!isEditable) return
         const curr = {
             "bueno": false,
             "excelente": false,
@@ -26,24 +27,24 @@ export const Row = ({ onChange, dimensiones, excelente, bueno, endesarrollo, noa
                 <Box>
                     <Box w={hasMargins ? "100%" : 120}> <Text noOfLines={[1, 2, 3]}> {dimensiones.value} </Text> </Box>
                 </Box>
-                <Box _hover={{ cursor: "pointer", backgroundColor: (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7")}} p={4} backgroundColor={excelente.selected ?  (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined } onClick={()=>{ clickDescriptor("excelente")}}>
+                <Box _hover={{ cursor:  isEditable ?  "pointer" : "cursor" , backgroundColor: isEditable ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : "" }} p={4} backgroundColor={excelente.selected ?  (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined } onClick={()=>{ clickDescriptor("excelente")}}>
                     {<Box w={hasMargins ? "100%" : 120}> <Text> {excelente.value} </Text> </Box>}
                     {<Text><b> Total Points: {excelente.points} </b> </Text>}
                 </Box>
 
-                <Box  _hover={{ cursor: "pointer", backgroundColor: (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7")}} p={4}  backgroundColor={bueno.selected ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined }  onClick={()=>{ clickDescriptor("bueno")}}> 
+                <Box  _hover={{ cursor: isEditable ? "pointer" : "cursor", backgroundColor: isEditable ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : ""}} p={4}  backgroundColor={bueno.selected ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined }  onClick={()=>{ clickDescriptor("bueno")}}> 
                     {(<>
                         <Box w={hasMargins ? "100%" : 120}>   <Text noOfLines={[1, 2, 3]}> {bueno.value} </Text> </Box>
                         <Text> <b> Total Points: {bueno.points} </b> </Text>
                     </>)}
                 </Box>
-                <Box  _hover={{ cursor: "pointer", backgroundColor: (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7")}}  p={4} backgroundColor={endesarrollo.selected ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined }  onClick={()=>{ clickDescriptor("endesarrollo")}}>
+                <Box  _hover={{ cursor: isEditable ? "pointer" : "cursor", backgroundColor: isEditable ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : "" }}  p={4} backgroundColor={endesarrollo.selected ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined }  onClick={()=>{ clickDescriptor("endesarrollo")}}>
                     {(<>
                         <Box w={hasMargins ? "100%" : 120}> <Text> {endesarrollo.value} </Text> </Box>
                         <Text> <b> Total Points: {endesarrollo.points} </b> </Text>
                     </>)}
                 </Box>
-                <Box  _hover={{ cursor: "pointer", backgroundColor: (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7")}} p={4} backgroundColor={noaceptable.selected ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined }  onClick={()=>{ clickDescriptor("noaceptable")}}>
+                <Box  _hover={{ cursor: isEditable ? "pointer" : "cursor", backgroundColor: isEditable ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : "" }} p={4} backgroundColor={noaceptable.selected ? (i % 2 === 1 ? "#F5F8FA" : "#D9ECF7") : undefined }  onClick={()=>{ clickDescriptor("noaceptable")}}>
                     {(<>
                         <Box w={hasMargins ? "100%" : 120}> <Text> {noaceptable.value} </Text> </Box>
                         <Text> <b> Total Points: {noaceptable.points} </b> </Text>
