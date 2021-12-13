@@ -205,8 +205,8 @@ export const GradeRubric = () => {
                 isClosable: true,
             })
         })
-        onClose()
         setIsEditable(false)
+        onClose()
     }
 
     const GradeRubricByStudent = () => {
