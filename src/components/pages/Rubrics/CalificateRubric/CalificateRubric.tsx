@@ -77,16 +77,6 @@ export const GradeRubric = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
-        const role = localStorage.getItem("role")
-
-        if(role) {
-            if(role === "Calidad"){
-                setIsEditable(false)
-            }
-        }
-    }, [])
-
-    useEffect(() => {
         GetRubricInfoForGradeStudent(courseCode, rubricCode).then((val: CreateRubricResponse) => {
             if (val.data[0].content) {
                 let rubricContent = JSON.parse(val.data[0].content)
@@ -98,8 +88,13 @@ export const GradeRubric = () => {
             setActivity(rubricInfo.activity)
             setRubricInformation(rubricInfo)
             setIsEditable(!(rubricInfo.state === "Cumplidos"))
-            console.log(!(rubricInfo.state === "Cumplidos"))
-            console.log(rubricInfo)
+            const role = localStorage.getItem("role")
+
+            if(role) {
+                if(role === "Calidad"){
+                    setIsEditable(false)
+                }
+            }
         }).catch((err) => {
             toast({
                 title: "We have a issue, try again please",
