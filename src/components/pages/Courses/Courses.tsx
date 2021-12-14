@@ -66,13 +66,6 @@ export const CoursesPage = () => {
 
   useEffect(() => {
 
-    const rawCourse = localStorage.getItem("courses")
-    if (rawCourse && rawCourse?.length !== 0) {
-      const parsedCourse = JSON.parse(rawCourse)
-      setUserCourses(parsedCourse)
-      return
-    }
-
     GetCourses().then((res: CoursesResponse) => {
       const userCourses = res.data
       const coursesDisplayed = userCourses.map((val: CoursesDisplayed) => {
@@ -87,7 +80,7 @@ export const CoursesPage = () => {
       })
 
       setUserCourses(coursesDisplayed)
-      localStorage.setItem("courses", JSON.stringify(coursesDisplayed))
+
 
     }).catch((err) => {
       console.log(err)
