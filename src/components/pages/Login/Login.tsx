@@ -11,14 +11,16 @@ export const Login = () => {
 
   const responseGoogle = (user: any) => {
     localStorage.clear()
-    if (user) {
-      const indexOf = user.profileObj.email.indexOf("@");
-      if (indexOf && user.profileObj.email.substr(indexOf) !== "@utec.edu.pe") {
-        history.push("/not-found");
-      } else {
-        localStorage.setItem("user", JSON.stringify(user));
-      }
+    if (!user || !user.profileObj) return
+
+
+    const indexOf = user.profileObj.email.indexOf("@");
+    if (indexOf && user.profileObj.email.substr(indexOf) !== "@utec.edu.pe") {
+      history.push("/not-found");
+    } else {
+      localStorage.setItem("user", JSON.stringify(user));
     }
+
 
     if (user.tokenId) {
       const token = user.tokenId;
