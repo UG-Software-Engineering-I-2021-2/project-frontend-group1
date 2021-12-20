@@ -199,7 +199,8 @@ export const CreateNewRubric = () => {
       courseCode: courseCode,
       courseName: course,
       title: title,
-      comment: comment
+      comment: comment,
+      link: window.location.href
     }).then((val) => {
       toast({
         title: "Se ha enviado correctamente el comentario para la rúbrica rechazada.",

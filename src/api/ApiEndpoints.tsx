@@ -85,7 +85,8 @@ export const RubricRevisionPetitionDecline = (data: {
     courseCode: string,
     courseName: string,
     title: string,
-    comment: string
+    comment: string,
+    link: string
 }) => {
     return axiosEnv.post("/rubric_revision", { ...data, accepted: false })
 }
