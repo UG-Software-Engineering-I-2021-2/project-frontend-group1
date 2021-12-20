@@ -8,8 +8,9 @@ import { Flex, Stack, Box, Heading, Text, Center } from "@chakra-ui/layout";
 export const Login = () => {
   const history = useHistory()
 
-
+  
   const responseGoogle = (user: any) => {
+    const ref = localStorage.getItem("ref")
     localStorage.clear()
     if (!user || !user.profileObj) return
 
@@ -30,6 +31,11 @@ export const Login = () => {
         localStorage.setItem("email", user.profileObj.email)
         localStorage.setItem("name", loggedUser.data.name)
         localStorage.setItem("token", token)
+        if(ref){
+          console.log(ref)
+          history.push(ref)
+          return
+        }
         history.push("/main")
       }).catch((err) => {
         history.push("/not-found")

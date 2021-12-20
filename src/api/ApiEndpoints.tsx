@@ -22,6 +22,19 @@ axiosEnv.interceptors.request.use((request) => {
     return request;
 })
 
+axiosEnv.interceptors.response.use(
+    res => res,
+    err => {    
+        if(err?.response?.data?.error === "token not verified") {
+            localStorage.setItem("ref", window.location.pathname + window.location.search)
+            window.location.href = window.location.origin + "/login"
+            console.log(window.location)
+            console.log(window.location.search)
+        }
+    }
+  )
+
+
 export const LoginApp = (token: string): Promise<LoginResponse> => {
     return axios.post(`${BASE_URL}login`, null, {
         headers: {
