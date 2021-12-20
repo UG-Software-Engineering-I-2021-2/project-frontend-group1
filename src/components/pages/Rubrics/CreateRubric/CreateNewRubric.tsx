@@ -151,7 +151,7 @@ export const CreateNewRubric = () => {
       return
     }
 
-    RubricReviewPetition({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course }).then((val) => {
+    RubricReviewPetition({ content: rows, title: title, activity: activity || "", semester: "2021 - 2", courseCode: courseCode, rubricCode: code, courseName: course, link: window.location.href }).then((val) => {
       toast({
         title: "Se ha enviado correctamente un correo al área de calidad, por favor espere su revisión.",
         status: "success",
@@ -175,6 +175,7 @@ export const CreateNewRubric = () => {
       courseCode: courseCode,
       courseName: course,
       title: title,
+      link: window.location.href
     }).then((val) => {
       toast({
         title: "Se ha aprobado correctamente la rúbrica.",

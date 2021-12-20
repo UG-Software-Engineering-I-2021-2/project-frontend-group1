@@ -64,7 +64,7 @@ export const SaveRubric = (data: { title: string, content: any, activity: string
     return axiosEnv.post("/rubric_creation", { ...data, onlySave: true })
 }
 
-export const RubricReviewPetition = (data: { title: string, content: any, activity: string, courseName: string, rubricCode: string, semester: string, courseCode: string }) => {
+export const RubricReviewPetition = (data: { title: string, content: any, activity: string, courseName: string, rubricCode: string, semester: string, courseCode: string, link: string }) => {
     return axiosEnv.post("/rubric_creation", { ...data, onlySave: false })
 }
 
@@ -73,7 +73,8 @@ export const RubricRevisionPetitionAccepted = (data: {
     semester: string,
     courseCode: string,
     courseName: string,
-    title: string
+    title: string,
+    link: string
 }) => {
     return axiosEnv.post("/rubric_revision", { ...data, accepted: true, comment: "" })
 }
