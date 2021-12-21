@@ -1,9 +1,14 @@
 
 
-
-export interface Student {
+export interface StudentList {
     studentCode: string,
     studentName: string,
+}
+
+export interface Student {
+    studentList: Array<StudentList>,
+    studentFinished: number,
+    studentTotal: number,
 }
 
 

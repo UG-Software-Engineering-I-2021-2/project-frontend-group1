@@ -5,7 +5,7 @@ import queryString from "query-string";
 import {
     Box, Heading, Button, SimpleGrid, AccordionPanel, AccordionItem, Accordion, Grid,
     AccordionButton, AccordionIcon, GridItem, Text, Select, useToast, Modal, ModalOverlay,
-    ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure,
+    ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure,Progress,
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useHistory, useLocation } from "react-router";
@@ -13,7 +13,7 @@ import { GetRubricInfoForGradeStudent, GetStudentsBySection, GetStudentsGradeByS
 import { CreateRubricInterface, CreateRubricResponse } from "../../../../interfaces/rubric";
 import { Row } from "./Row"
 import { HeaderRubric } from "../CreateRubric/HeaderRubric";
-import { CompetenceRubric, Student, StudentGrade, StudentResponse, StudentsGradeResponse } from "../../../../interfaces/students";
+import { CompetenceRubric, Student, StudentGrade, StudentList, StudentResponse, StudentsGradeResponse } from "../../../../interfaces/students";
 
 const defaultState = {
     dimensiones: {
@@ -56,9 +56,12 @@ export const GradeRubric = () => {
     const [activity, setActivity] = useState("")
     const [rows, setRows] = useState([defaultState]);
 
+    const [totalStudents, setTotalStudents] = useState(0)
+    const [ finishedStudents,  setTotalFinishedStudents] = useState(0
+        )
     const [sections, setSections] = useState<string>()
 
-    const [students, setStudents] = useState<Array<Student>>()
+    const [students, setStudents] = useState<Array<StudentList>>()
 
     const [bueno, setBueno] = useState(0)
     const [excelente, setExcelente] = useState(0)
@@ -75,6 +78,8 @@ export const GradeRubric = () => {
 
     const [isEditable, setIsEditable] = useState(true)
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [loading, setLoadingStudent] = useState(false)
 
     useEffect(() => {
         GetRubricInfoForGradeStudent(courseCode, rubricCode).then((val: CreateRubricResponse) => {
@@ -106,7 +111,12 @@ export const GradeRubric = () => {
 
     useEffect(() => {
         GetStudentsBySection(courseCode, rubricCode, sections).then((val: StudentResponse) => {
-            setStudents(val.data)
+            console.log(val.data[0])
+            if(val && val.data[0] && val.data[0].studentList) {
+                setStudents(val.data[0].studentList)
+                setTotalStudents(val.data[0].studentTotal)
+                setTotalFinishedStudents(val.data[0].studentFinished)
+            }
         }).catch((err) => {
             toast({
                 title: "We have a issue, try again please",
@@ -149,6 +159,8 @@ export const GradeRubric = () => {
 
     useEffect(() => {
 
+        setLoadingStudent(true)
+
         GetStudentsGradeBySection(courseCode, rubricCode, String(studentSelected)).then((val: StudentsGradeResponse) => {
             const data = val.data
             const compentenceGrade: CompetenceRubric = JSON.parse(data.competenceGrade)
@@ -163,6 +175,7 @@ export const GradeRubric = () => {
             setFinalGrade(studentGrade.total)
             const content = JSON.parse(studentGrade.content)
             setRows(content)
+            setLoadingStudent(false)
         }).catch((err) => {
             setCompetenceLeft(0)
             setCompetenceRight(0)
@@ -177,8 +190,10 @@ export const GradeRubric = () => {
                 return
             }
             const rowsContent = JSON.parse(rowsRaw)
+            setLoadingStudent(false)
             setRows(rowsContent)
         })
+
     }, [studentSelected])
 
     const handleOnChange = (index: number, value: any) => {
@@ -227,6 +242,9 @@ export const GradeRubric = () => {
 
         setFinish(finished)
         RubricGradeSave(rows, rubricCode, courseCode, String(studentSelected), JSON.stringify(studentGrade), JSON.stringify(competeceGrade), finished).then((val) => {
+            if(finished){
+                setTotalFinishedStudents(finishedStudents + 1)
+            }
             toast({
                 title: "Se guardo la calificacion del alumno correctamente",
                 status: "success",
@@ -413,23 +431,10 @@ export const GradeRubric = () => {
                             </AccordionItem>
                         </Accordion>
 
-                        {
-
-                            (isEditable ? <Grid templateColumns="repeat(5, 2fr)" gap={6}>
-                                <Box></Box>
-                                <Box></Box>
-                                <Box></Box>
-
- 
-                                <Button onClick={GradeRubricByStudent} colorScheme='green' variant='outline'>Guardar</Button>
-                                <Button onClick={onOpen} colorScheme='blue'>Finalizar</Button>
-
-                            </Grid> : null)
-                        }
 
                         {
 
-                            (<Grid templateColumns="repeat(5, 2fr)" gap={6} mt={5}>
+                            (<Grid templateColumns="repeat(5, 2fr)" gap={2} mt={5}>
                                 <Box>
                                     <Select placeholder='Selecciona una seccion' onChange={(e) => setSections(e.target.value)}>
                                         {
@@ -439,33 +444,41 @@ export const GradeRubric = () => {
                                         }
                                     </Select>
                                 </Box>
-                                <Box></Box>
-                                <Box></Box>
-                                <Box></Box>
                                 <Box>
-                                    <Select placeholder='Selecciona un alumno' onChange={(e) => setStudentSelected(e.target.value)}>
-                                        {
-                                            students?.map((val: Student) => {
-                                                return <option value={val.studentCode} key={val.studentCode}>{val.studentName}</option>
-                                            })
-                                        }
-                                    </Select>
+                                    {
+                                        sections ? (
+                                            <Select placeholder='Selecciona un alumno' onChange={(e) => setStudentSelected(e.target.value)}>
+                                            {
+                                                students?.map((val: StudentList) => {
+                                                    return <option value={val.studentCode} key={val.studentCode}>{val.studentName}</option>
+                                                })
+                                            }
+                                        </Select>
+                                        ) : null
+                                    }
                                 </Box>
+                                <Box></Box>
+
+                                   { isEditable ? <Button onClick={GradeRubricByStudent} colorScheme='green' >Guardar</Button>  : null}
+
+
+                                   { isEditable ? <Button onClick={onOpen} colorScheme='blue'>Finalizar</Button> : null }
+
                             </Grid>)
                         }
 
 
 
-                        <Box minH={500}>
+                      <Box minH={500}>
                             <Grid templateColumns="repeat(3, 1fr)" gap={6} mt={10} mb={3}>
                                 <Box></Box>
                                 <Box style={{ display: "flex", justifyContent: "center" }}>
                                     <Heading mb={5}> {title} </Heading>
                                 </Box>
-
+                               {sections ? <Box style={{display:"flex", justifyContent:"end"}}> {finishedStudents + "/" + totalStudents + " Estudiantes calificados"}</Box> : null}
                             </Grid>
                             <HeaderRubric isFinished={finish} isEditable={false} hasMargins={true} />
-                            {rows.map((row, index) => (
+                            { loading ? <Box w="100%" mt={10} ml={20}><Progress size='xs' isIndeterminate /> </Box>:rows.map((row, index) => (
                                 <Row
                                     onChange={(value) => handleOnChange(index, value)}
                                     {...row}

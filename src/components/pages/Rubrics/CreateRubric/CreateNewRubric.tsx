@@ -474,10 +474,10 @@ export const CreateNewRubric = () => {
             <Grid templateColumns="repeat(3, 1fr)" gap={6} mt={10} mb={3}>
               <Box></Box>
               <Box style={{ display: "flex", justifyContent: "center" }}>
-                {isEditable ? <Editable fontSize="2xl" value={title} onChange={(e) => setTitle(e)}>
+                {isEditable ?  <Editable fontSize="2xl" value={title} onChange={(e) => setTitle(e)}>
                   <EditablePreview />
                   <EditableInput />
-                </Editable> : <Heading mb={5}> {title} </Heading>}
+                </Editable>: <Heading mb={5}> {title} </Heading>}
               </Box>
               <Box style={{ display: "flex", justifyContent: "flex-end" }}>
                 {isEditable ? (<ButtonGroup size='sm' isAttached variant='outline' onClick={handleOnAdd}>

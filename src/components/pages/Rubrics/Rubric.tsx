@@ -121,7 +121,6 @@ export const RubricPage = () => {
     setLoading(true)
     GetRubrics(code)
       .then((val: any) => {
-        console.log(val)
         const userRubric = val.data;
         setLoading(false)
         setRubric(userRubric);
