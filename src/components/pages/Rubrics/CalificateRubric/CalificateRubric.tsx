@@ -285,10 +285,10 @@ export const GradeRubric = () => {
             <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Finalizar Calificar rubricas</ModalHeader>
+                    <ModalHeader>Finalizar Calificar rúbricas</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        ¿Estas seguro que ha terminado de calificar todas las rubricas?
+                        ¿Está seguro(a) que ha terminado de calificar todas las rúbricas?
                     </ModalBody>
 
                     <ModalFooter>
@@ -311,7 +311,7 @@ export const GradeRubric = () => {
                                 history.push(`/rubric?name=${course}&cod=${courseCode}`);
                             }}
                         >
-                            Regresar a mis rubricas
+                            Regresar a mis rúbricas
                         </Button>
                     </Box>
 

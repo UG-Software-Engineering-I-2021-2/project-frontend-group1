@@ -68,7 +68,7 @@ export const Statistics = () => {
     }, [filterCompetence])
 
     return (<Box p={5}>
-        <SimpleGrid columns={5} padding={20} gap={3} ml={3}>
+        <SimpleGrid columns={5} padding={3} gap={3} ml={3} marginBottom={10}>
             <Box w={80} style={{ display: "flex", justifySelf: "flex-end" }}>
 
                 <Select placeholder="Filtrar por carrera" value={filterCareersByStatus} onChange={(e) => setFilterCareersByStatus(e.target.value)}>
@@ -82,7 +82,7 @@ export const Statistics = () => {
             <Box w={80} >
                 {
                     filterCareersByStatus ? (
-                        <Select placeholder="Competencias" value={filterCompetence} onChange={(e) => setFilteredCompetence(e.target.value)}>
+                        <Select placeholder="Competencias" value={filterCompetence} onChange={(e) => setFilteredCompetence(e.target.value)} width={1200}>
                             {
                                 competences.map((val) => {
                                     return <option key={val.code} value={val.code}>{val.code + " - " + val.description}</option>
@@ -119,7 +119,7 @@ export const Statistics = () => {
                     <GridItem rowStart={1} rowEnd={2} rowSpan={1} colStart={2} colSpan={2} style={{ backgroundColor: "lightblue", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Box style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "13px" }} >
                             <Heading size={"md"}>
-                                Descripcion
+                                Descripción
                             </Heading>
                         </Box>
                     </GridItem>
@@ -132,7 +132,7 @@ export const Statistics = () => {
                     <GridItem rowStart={1} rowEnd={2} rowSpan={1} colStart={4} colSpan={3} style={{ backgroundColor: "lightblue", display: "flex", justifyContent: "center", alignItems: "center" }} >
                         <Box style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "13px" }} >
                             <Heading size={"md"}>
-                                Descripcion de los criterios de desempeño
+                                Descripción de los criterios de desempeño
                             </Heading>
                         </Box>
                     </GridItem>
