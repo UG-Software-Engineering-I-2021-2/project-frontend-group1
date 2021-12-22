@@ -104,7 +104,7 @@ const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) 
 export const NotFoundRubrics = () => {
   return <Center>
     <Heading>
-      No se encontrar las rubricas para este curso
+      No se encontrar las rúbricas para este curso
     </Heading>
   </Center>
 }

@@ -12,5 +12,5 @@ export const NotFoundUser = () => {
         }, 1000)
     }, [])
 
-    return (<> User not found </>)
+    return (<> Usuario no encontrado en nuestro sistema.  </>)
 }

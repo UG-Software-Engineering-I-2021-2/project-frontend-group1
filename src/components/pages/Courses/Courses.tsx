@@ -164,7 +164,7 @@ export const CoursesPage = () => {
         <Box w={80} style={{display:"flex", justifySelf:"flex-end"}}>
 
           <Select placeholder="Filtrar por estado" value={filterCareersByStatus} onChange={(e) => filterStatusHandler(e.target.value)}>
-            <option value="Aprobacion pendiente">Aprobacion pendiente</option>
+            <option value="Aprobacion pendiente">Aprobación pendiente</option>
             <option value="Cumplidos">Cumplidos</option>
             <option value="Disponible para calificar">Disponible para calificar</option>
             <option value="Fuera de fecha">Fuera de fecha</option>
