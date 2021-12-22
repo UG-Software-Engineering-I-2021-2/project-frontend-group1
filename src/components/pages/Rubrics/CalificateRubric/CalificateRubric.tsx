@@ -242,7 +242,7 @@ export const GradeRubric = () => {
 
         setFinish(finished)
         RubricGradeSave(rows, rubricCode, courseCode, String(studentSelected), JSON.stringify(studentGrade), JSON.stringify(competeceGrade), finished).then((val) => {
-            if(finished){
+            if(finished && !finish){
                 setTotalFinishedStudents(finishedStudents + 1)
             }
             toast({
