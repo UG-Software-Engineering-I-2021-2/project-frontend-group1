@@ -50,7 +50,7 @@ export const GradeRubric = () => {
     const [course, setCourse] = useState(queryString.parse(search).course);
     const [rubricCode, setCode] = useState(queryString.parse(search).code);
     const [courseCode, setCourseCode] = useState(queryString.parse(search).courseCode)
-    const [canGrade, setCanGrade] = useState(queryString.parse(search).canGrade)
+    const [canGrade, setCanGrade] = useState(queryString.parse(search).canGrade || "")
 
     const [rubricInformation, setRubricInformation] = useState<CreateRubricInterface>()
 
