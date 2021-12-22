@@ -111,7 +111,6 @@ export const GradeRubric = () => {
 
     useEffect(() => {
         GetStudentsBySection(courseCode, rubricCode, sections).then((val: StudentResponse) => {
-            console.log(val.data[0])
             if(val && val.data[0] && val.data[0].studentList) {
                 setStudents(val.data[0].studentList)
                 setTotalStudents(val.data[0].studentTotal)
@@ -158,7 +157,6 @@ export const GradeRubric = () => {
     }, [rows])
 
     useEffect(() => {
-
         setLoadingStudent(true)
 
         GetStudentsGradeBySection(courseCode, rubricCode, String(studentSelected)).then((val: StudentsGradeResponse) => {
@@ -172,10 +170,10 @@ export const GradeRubric = () => {
             setExcelente(studentGrade.excelente)
             setNoaceptable(studentGrade.noaceptable)
             setEndesarrollo(studentGrade.endesarrollo)
+            setLoadingStudent(false)
             setFinalGrade(studentGrade.total)
             const content = JSON.parse(studentGrade.content)
             setRows(content)
-            setLoadingStudent(false)
         }).catch((err) => {
             setCompetenceLeft(0)
             setCompetenceRight(0)
@@ -184,13 +182,13 @@ export const GradeRubric = () => {
             setNoaceptable(0)
             setEndesarrollo(0)
             setFinalGrade(0)
+            setLoadingStudent(false)
             setFinish(false)
             const rowsRaw = localStorage.getItem("rubricInfo")
             if (!rowsRaw) {
                 return
             }
             const rowsContent = JSON.parse(rowsRaw)
-            setLoadingStudent(false)
             setRows(rowsContent)
         })
 
@@ -460,10 +458,10 @@ export const GradeRubric = () => {
                                 </Box>
                                 <Box></Box>
 
-                                   { isEditable ? <Button onClick={GradeRubricByStudent} colorScheme='green' >Guardar</Button>  : null}
+                                   {  isEditable && studentSelected ? <Button onClick={GradeRubricByStudent} colorScheme='green' >Guardar</Button>  : null}
 
 
-                                   { isEditable ? <Button onClick={onOpen} colorScheme='blue'>Finalizar</Button> : null }
+                                   { isEditable && studentSelected ? <Button onClick={onOpen} colorScheme='blue'>Finalizar</Button> : null }
 
                             </Grid>)
                         }
