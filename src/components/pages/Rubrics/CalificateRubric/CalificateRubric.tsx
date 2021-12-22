@@ -196,17 +196,6 @@ export const GradeRubric = () => {
 
     }, [studentSelected])
 
-    const handleOnChange = (index: number, value: any) => {
-        const copyRows = [...rows];
-        copyRows[index].bueno.selected = false
-        copyRows[index].excelente.selected = false
-        copyRows[index].endesarrollo.selected = false
-        copyRows[index].noaceptable.selected = false
-        copyRows[index][value]["selected"] = true
-        setRows(copyRows);
-    }
-
-
     const GradeRubricByStudent = () => {
         if (!studentSelected || studentSelected.toString().length === 0) {
             toast({
@@ -279,6 +268,18 @@ export const GradeRubric = () => {
         onClose()
     }
     
+
+    const handleOnChange = (index: number, value: any) => {
+        const copyRows = [...rows];
+        copyRows[index].bueno.selected = false
+        copyRows[index].excelente.selected = false
+        copyRows[index].endesarrollo.selected = false
+        copyRows[index].noaceptable.selected = false
+        copyRows[index][value]["selected"] = true
+        setRows(copyRows);
+    }
+
+
     return (
         <>
 
