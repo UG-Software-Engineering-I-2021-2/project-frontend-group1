@@ -24,7 +24,7 @@ const RubricCard = (props: { data: Rubric, course: string,courseCode: string }) 
 
   const clickCreateRubric = () => {
     if(props.data.canGrade || props.data.state === "Disponible para calificar" || props.data.state === "Cumplidos") {
-      history.push(`/grade-rubric?code=${props.data.code}&course=${props.course}&courseCode=${props.courseCode}`);
+      history.push(`/grade-rubric?code=${props.data.code}&course=${props.course}&courseCode=${props.courseCode}?canGrade=${props.data.canGrade}`);
       return
     }
 

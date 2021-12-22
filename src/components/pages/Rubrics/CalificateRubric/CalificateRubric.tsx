@@ -50,6 +50,8 @@ export const GradeRubric = () => {
     const [course, setCourse] = useState(queryString.parse(search).course);
     const [rubricCode, setCode] = useState(queryString.parse(search).code);
     const [courseCode, setCourseCode] = useState(queryString.parse(search).courseCode)
+    const [canGrade, setCanGrade] = useState(queryString.parse(search).canGrade)
+
     const [rubricInformation, setRubricInformation] = useState<CreateRubricInterface>()
 
     const [title, setTitle] = useState("No title")
@@ -458,10 +460,10 @@ export const GradeRubric = () => {
                                 </Box>
                                 <Box></Box>
 
-                                   {  isEditable && studentSelected ? <Button onClick={GradeRubricByStudent} colorScheme='green' >Guardar</Button>  : null}
+                                   {  isEditable && studentSelected && (String(canGrade) === "true" || String(canGrade) === "") ? <Button onClick={GradeRubricByStudent} colorScheme='green' >Guardar</Button>  : null}
 
 
-                                   { isEditable && studentSelected ? <Button onClick={onOpen} colorScheme='blue'>Finalizar</Button> : null }
+                                   { isEditable && studentSelected && (String(canGrade) === "true" || String(canGrade) === "") ? <Button onClick={onOpen} colorScheme='blue'>Finalizar</Button> : null }
 
                             </Grid>)
                         }
