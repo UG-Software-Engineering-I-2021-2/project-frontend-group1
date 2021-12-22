@@ -231,11 +231,18 @@ export const Statistics = () => {
                     loader={<div>Loading Chart</div>}
                     data={data}
                     options={{
-
+                        colors: ['green', 'yellow', 'red'],
                         chart: {
                             title: 'Estadísticas',
                             subtitle: 'Niveles',
                         },
+                        vAxis: {
+                            maxValue: 100,
+                        },
+                        hAxis: {
+                            title: 'Resultados',
+                            minValue: 0,
+                          },
                     }}
 
                 />
