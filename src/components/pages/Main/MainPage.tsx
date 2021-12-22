@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { CoursesPage } from "../Courses/Courses";
 import { Header } from "../../templates/header/header";
+import { Statistics  } from "../Statistics/Statistics";
 
 export const MainPage = () => {
 
@@ -20,7 +21,7 @@ export const MainPage = () => {
             <CoursesPage />
           </TabPanel>
           <TabPanel>
-            <p>Estadisticas generales</p>
+            <Statistics/>
           </TabPanel>
         </TabPanels>
       </Tabs>

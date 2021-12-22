@@ -123,10 +123,22 @@ export const RubricGradeSave = (content: any, rubricCode: string, courseCode: st
     })
 }
 
-
 export const RubricGradeSaveFinish = (rubricCode: string): Promise<StudentsGradeResponse> => {
     return axiosEnv.post(`/rubric_finish`, {
         "semester": "2021 - 2",
         rubricCode: rubricCode
     })
+}
+
+export const GetCareersStatistics = () => { 
+    return axiosEnv.get("/statistics_get_careers")
+}
+
+export const GetCompetencesByCareer = (career: string) => {
+    return axiosEnv.get(`/statistics_get_competences_by_career?careerId=${career}`)
+}
+
+export const GetFirstStatistics = (competenceCode: string) =>{
+    const role = localStorage.getItem("role")
+    return axiosEnv.get(`/statistics1_get?semester=2021 - 2&role=${role}&competenceCode=${competenceCode}`)
 }

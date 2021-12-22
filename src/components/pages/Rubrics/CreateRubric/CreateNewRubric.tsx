@@ -4,13 +4,12 @@ import queryString from "query-string";
 import {
   Box, Heading, Button, SimpleGrid, Grid, GridItem, useDisclosure, Editable, EditablePreview, Accordion,
   AccordionItem, EditableInput, Textarea, Text, ButtonGroup, IconButton, Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, List, ListItem, Center,
-  AccordionIcon, AccordionButton, AccordionPanel,
+  ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, List, ListItem, Center,Flex,useToast,
+  AccordionIcon, AccordionButton, AccordionPanel,useEditableControls,
 } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon ,CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
 import { GetRubricCreation, SaveRubric, RubricReviewPetition, RubricRevisionPetitionAccepted, RubricRevisionPetitionDecline, GetRubricsForImport } from "../../../../api/ApiEndpoints";
 import { CreateRubricInterface, CreateRubricResponse, ImportRubric, ImportRubricContent } from "../../../../interfaces/rubric";
-import { useToast } from "@chakra-ui/react"
 
 import { _ } from "gridjs-react";
 import { Header } from "../../../templates/header/header";
@@ -41,6 +40,7 @@ const defaultState = {
     points: 1,
   }
 };
+
 
 export const CreateNewRubric = () => {
   const history = useHistory();
@@ -236,6 +236,32 @@ export const CreateNewRubric = () => {
       return
     })
   }
+
+
+
+  const EditableControls = () => {
+    const {
+      isEditing,
+      getSubmitButtonProps,
+      getCancelButtonProps,
+      getEditButtonProps,
+    } = useEditableControls()
+
+    return isEditing ? (
+      <ButtonGroup size='sm'>
+        {/*@ts-ignore*/}
+        <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} />
+        {/*@ts-ignore*/}
+        <IconButton icon={<CloseIcon />} {...getCancelButtonProps()} />
+      </ButtonGroup>
+    ) : (
+      <Flex display={"inline"} ml={2}>
+        {/*@ts-ignore*/}
+        <IconButton size='sm' icon={<EditIcon />} {...getEditButtonProps()} />
+      </Flex>
+    )
+  }
+  
   return (
     <>
       <Header></Header>
@@ -477,6 +503,7 @@ export const CreateNewRubric = () => {
                 {isEditable ?  <Editable fontSize="2xl" value={title} onChange={(e) => setTitle(e)}>
                   <EditablePreview />
                   <EditableInput />
+                  <EditableControls />
                 </Editable>: <Heading mb={5}> {title} </Heading>}
               </Box>
               <Box style={{ display: "flex", justifyContent: "flex-end" }}>

@@ -66,7 +66,7 @@ export const Login = () => {
               <img src="https://www.utec.edu.pe/sites/all/themes/utec_theme/LOGO_UTEC.png"></img>
             </Box>
           </Center>
-          <Heading color="teal.400" mb={20}>Proyecto de Ingeniería de Software</Heading>
+          <Heading color="teal.400" mb={20}>Sistema de gestión de competencias</Heading>
 
 
           <Box minW={{ base: "90%", md: "468px" }} style={{ marginTop: "100px" }}>
